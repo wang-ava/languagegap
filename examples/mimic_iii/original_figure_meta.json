@@ -1,0 +1,10 @@
+{
+  "patient_id": 3824,
+  "fig_idx": 113,
+  "gender": "Male",
+  "age": 62,
+  "diagnosis": "INCREASED ANGINA;CORONARY ARTERY DISEASE\\LEFT HEART CATHETERIZATION",
+  "vent_hours_history": 13,
+  "vaso_history_12h": [],
+  "vaso_display_string": "None"
+}

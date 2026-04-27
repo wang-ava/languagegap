@@ -1,0 +1,290 @@
+{
+  "patient_id": "patient_113",
+  "image_path": "MIMIC-III/dataset/data/figure/chinese/patient_113_chinese.jpg",
+  "language": "zh",
+  "result": {
+    "step1_response": "```json\n{\n  \"patient_info\": {\n    \"patient_id\": \"113\",\n    \"gender\": \"男\",\n    \"age\": \"62岁\",\n    \"ventilation_duration\": \"13h\",\n    \"admission_diagnosis\": \"心绞痛加重；冠状动脉疾病/左心导管术\",\n    \"vasoactive_drugs_past_12h\": \"无\"\n  },\n  \"vital_signs\": [\n    {\n      \"parameter_name\": \"心率\",\n      \"min_value\": 82,\n      \"max_value\": 89,\n      \"mean_value\": 85,\n      \"unit\": \"次/分\"\n    },\n    {\n      \"parameter_name\": \"平均动脉压\",\n      \"min_value\": 92,\n      \"max_value\": 116,\n      \"mean_value\": 101,\n      \"unit\": \"mmHg\"\n    },\n    {\n      \"parameter_name\": \"格拉斯哥昏迷评分总分(GCS)\",\n      \"min_value\": 9,\n      \"max_value\": 15,\n      \"mean_value\": 12.3,\n      \"unit\": \"分\"\n    },\n    {\n      \"parameter_name\": \"呼气末正压(PEEP)\",\n      \"min_value\": 5,\n      \"max_value\": 5,\n      \"mean_value\": 5,\n      \"unit\": \"cmH2O\"\n    },\n    {\n      \"parameter_name\": \"呼吸频率\",\n      \"min_value\": 15,\n      \"max_value\": 19.5,\n      \"mean_value\": 17.3,\n      \"unit\": \"次/分\"\n    },\n    {\n      \"parameter_name\": \"二氧化碳分压(PaCO2)\",\n      \"min_value\": 37,\n      \"max_value\": 37,\n      \"mean_value\": 37,\n      \"unit\": \"mmHg\"\n    },\n    {\n      \"parameter_name\": \"潮气量(实测)\",\n      \"min_value\": 480,\n      \"max_value\": 480,\n      \"mean_value\": 480,\n      \"unit\": \"mL\"\n    },\n    {\n      \"parameter_name\": \"pH值\",\n      \"min_value\": 7.32,\n      \"max_value\": 7.33,\n      \"mean_value\": 7.33,\n      \"unit\": \"pH\"\n    },\n    {\n      \"parameter_name\": \"碳酸氢盐(HCO3-)\",\n      \"min_value\": 23,\n      \"max_value\": 24,\n      \"mean_value\": 23.3,\n      \"unit\": \"mmol/L\"\n    },\n    {\n      \"parameter_name\": \"钾(K+)\",\n      \"min_value\": 3.5,\n      \"max_value\": 3.8,\n      \"mean_value\": 3.7,\n      \"unit\": \"mmol/L\"\n    },\n    {\n      \"parameter_name\": \"钠(Na+)\",\n      \"min_value\": 139,\n      \"max_value\": 140,\n      \"mean_value\": 139.3,\n      \"unit\": \"mmol/L\"\n    },\n    {\n      \"parameter_name\": \"肌酐\",\n      \"min_value\": 0.8,\n      \"max_value\": 8.9,\n      \"mean_value\": 6.5,\n      \"unit\": \"mg/dL\"\n    },\n    {\n      \"parameter_name\": \"血尿素氮(BUN)\",\n      \"min_value\": 14,\n      \"max_value\": 62,\n      \"mean_value\": 49,\n      \"unit\": \"mg/dL\"\n    },\n    {\n      \"parameter_name\": \"乳酸\",\n      \"min_value\": 1.0,\n      \"max_value\": 1.0,\n      \"mean_value\": 1.0,\n      \"unit\": \"mmol/L\"\n    },\n    {\n      \"parameter_name\": \"氧合指数(P/F比值)\",\n      \"min_value\": 160,\n      \"max_value\": 160,\n      \"mean_value\": 160,\n      \"unit\": \"比值\"\n    },\n    {\n      \"parameter_name\": \"快速浅呼吸指数(RSBI)\",\n      \"min_value\": 31,\n      \"max_value\": 40,\n      \"mean_value\": 35,\n      \"unit\": \"次/分/升\"\n    }\n  ],\n  \"time_series_trends\": {\n    \"1\": {\n      \"parameter\": \"心率(次/分)\",\n      \"trend_type\": 1,\n      \"description\": \"全程小幅波动，整体平稳\"\n    },\n    \"2\": {\n      \"parameter\": \"平均血压(mmHg)\",\n      \"trend_type\": 10,\n      \"description\": \"先上升至峰值后持续下降\"\n    },\n    \"3\": {\n      \"parameter\": \"格拉斯哥昏迷评分总分(GCS,分)\",\n      \"trend_type\": 9,\n      \"description\": \"先从15下降到9并维持，末段回升至15\"\n    },\n    \"4\": {\n      \"parameter\": \"呼气末正压PEEP(cmH2O)\",\n      \"trend_type\": 1,\n      \"description\": \"恒定在5\"\n    },\n    \"5\": {\n      \"parameter\": \"呼吸频率(次/分)\",\n      \"trend_type\": 2,\n      \"description\": \"在15-19.5之间波动，无明确单向趋势\"\n    },\n    \"6\": {\n      \"parameter\": \"二氧化碳分压PaCO2(mmHg)\",\n      \"trend_type\": 1,\n      \"description\": \"恒定在37\"\n    },\n    \"7\": {\n      \"parameter\": \"潮气量(实测,mL)\",\n      \"trend_type\": 1,\n      \"description\": \"恒定在480\"\n    },\n    \"8\": {\n      \"parameter\": \"pH值\",\n      \"trend_type\": 1,\n      \"description\": \"稳定在7.32-7.33附近\"\n    },\n    \"9\": {\n      \"parameter\": \"碳酸氢盐HCO3-(mmol/L)\",\n      \"trend_type\": 6,\n      \"description\": \"先平稳(24)，后下降至23并维持\"\n    },\n    \"10\": {\n      \"parameter\": \"钾K+(mmol/L)\",\n      \"trend_type\": 5,\n      \"description\": \"先平稳(3.5)，后上升至3.8并维持\"\n    },\n    \"11\": {\n      \"parameter\": \"钠Na+(mmol/L)\",\n      \"trend_type\": 6,\n      \"description\": \"先平稳(140)，后下降至139并维持\"\n    },\n    \"12\": {\n      \"parameter\": \"肌酐(mg/dL)\",\n      \"trend_type\": 5,\n      \"description\": \"先低值平稳，随后显著上升并维持高位\"\n    },\n    \"13\": {\n      \"parameter\": \"血尿素氮BUN(mg/dL)\",\n      \"trend_type\": 5,\n      \"description\": \"先低值平稳，随后显著上升并维持高位\"\n    },\n    \"14\": {\n      \"parameter\": \"乳酸(mmol/L)\",\n      \"trend_type\": 1,\n      \"description\": \"恒定在1.0\"\n    },\n    \"15\": {\n      \"parameter\": \"氧合指数P/F比值\",\n      \"trend_type\": 1,\n      \"description\": \"全程基本不变(约160)\"\n    },\n    \"16\": {\n      \"parameter\": \"快速浅呼吸指数RSBI(次/分/升)\",\n      \"trend_type\": 2,\n      \"description\": \"在31-40范围内波动，无明确单向趋势\"\n    }\n  }\n}\n```",
+    "step1_valid": true,
+    "step1_structured": {
+      "patient_info": {
+        "patient_id": "113",
+        "gender": "男",
+        "age": "62岁",
+        "ventilation_duration": "13h",
+        "admission_diagnosis": "心绞痛加重；冠状动脉疾病/左心导管术",
+        "vasoactive_drugs_past_12h": "无"
+      },
+      "vital_signs": [
+        {
+          "parameter_name": "心率",
+          "min_value": 82,
+          "max_value": 89,
+          "mean_value": 85,
+          "unit": "次/分"
+        },
+        {
+          "parameter_name": "平均动脉压",
+          "min_value": 92,
+          "max_value": 116,
+          "mean_value": 101,
+          "unit": "mmHg"
+        },
+        {
+          "parameter_name": "格拉斯哥昏迷评分总分(GCS)",
+          "min_value": 9,
+          "max_value": 15,
+          "mean_value": 12.3,
+          "unit": "分"
+        },
+        {
+          "parameter_name": "呼气末正压(PEEP)",
+          "min_value": 5,
+          "max_value": 5,
+          "mean_value": 5,
+          "unit": "cmH2O"
+        },
+        {
+          "parameter_name": "呼吸频率",
+          "min_value": 15,
+          "max_value": 19.5,
+          "mean_value": 17.3,
+          "unit": "次/分"
+        },
+        {
+          "parameter_name": "二氧化碳分压(PaCO2)",
+          "min_value": 37,
+          "max_value": 37,
+          "mean_value": 37,
+          "unit": "mmHg"
+        },
+        {
+          "parameter_name": "潮气量(实测)",
+          "min_value": 480,
+          "max_value": 480,
+          "mean_value": 480,
+          "unit": "mL"
+        },
+        {
+          "parameter_name": "pH值",
+          "min_value": 7.32,
+          "max_value": 7.33,
+          "mean_value": 7.33,
+          "unit": "pH"
+        },
+        {
+          "parameter_name": "碳酸氢盐(HCO3-)",
+          "min_value": 23,
+          "max_value": 24,
+          "mean_value": 23.3,
+          "unit": "mmol/L"
+        },
+        {
+          "parameter_name": "钾(K+)",
+          "min_value": 3.5,
+          "max_value": 3.8,
+          "mean_value": 3.7,
+          "unit": "mmol/L"
+        },
+        {
+          "parameter_name": "钠(Na+)",
+          "min_value": 139,
+          "max_value": 140,
+          "mean_value": 139.3,
+          "unit": "mmol/L"
+        },
+        {
+          "parameter_name": "肌酐",
+          "min_value": 0.8,
+          "max_value": 8.9,
+          "mean_value": 6.5,
+          "unit": "mg/dL"
+        },
+        {
+          "parameter_name": "血尿素氮(BUN)",
+          "min_value": 14,
+          "max_value": 62,
+          "mean_value": 49,
+          "unit": "mg/dL"
+        },
+        {
+          "parameter_name": "乳酸",
+          "min_value": 1.0,
+          "max_value": 1.0,
+          "mean_value": 1.0,
+          "unit": "mmol/L"
+        },
+        {
+          "parameter_name": "氧合指数(P/F比值)",
+          "min_value": 160,
+          "max_value": 160,
+          "mean_value": 160,
+          "unit": "比值"
+        },
+        {
+          "parameter_name": "快速浅呼吸指数(RSBI)",
+          "min_value": 31,
+          "max_value": 40,
+          "mean_value": 35,
+          "unit": "次/分/升"
+        }
+      ],
+      "time_series_trends": {
+        "1": {
+          "parameter": "心率(次/分)",
+          "trend_type": 1,
+          "description": "全程小幅波动，整体平稳"
+        },
+        "2": {
+          "parameter": "平均血压(mmHg)",
+          "trend_type": 10,
+          "description": "先上升至峰值后持续下降"
+        },
+        "3": {
+          "parameter": "格拉斯哥昏迷评分总分(GCS,分)",
+          "trend_type": 9,
+          "description": "先从15下降到9并维持，末段回升至15"
+        },
+        "4": {
+          "parameter": "呼气末正压PEEP(cmH2O)",
+          "trend_type": 1,
+          "description": "恒定在5"
+        },
+        "5": {
+          "parameter": "呼吸频率(次/分)",
+          "trend_type": 2,
+          "description": "在15-19.5之间波动，无明确单向趋势"
+        },
+        "6": {
+          "parameter": "二氧化碳分压PaCO2(mmHg)",
+          "trend_type": 1,
+          "description": "恒定在37"
+        },
+        "7": {
+          "parameter": "潮气量(实测,mL)",
+          "trend_type": 1,
+          "description": "恒定在480"
+        },
+        "8": {
+          "parameter": "pH值",
+          "trend_type": 1,
+          "description": "稳定在7.32-7.33附近"
+        },
+        "9": {
+          "parameter": "碳酸氢盐HCO3-(mmol/L)",
+          "trend_type": 6,
+          "description": "先平稳(24)，后下降至23并维持"
+        },
+        "10": {
+          "parameter": "钾K+(mmol/L)",
+          "trend_type": 5,
+          "description": "先平稳(3.5)，后上升至3.8并维持"
+        },
+        "11": {
+          "parameter": "钠Na+(mmol/L)",
+          "trend_type": 6,
+          "description": "先平稳(140)，后下降至139并维持"
+        },
+        "12": {
+          "parameter": "肌酐(mg/dL)",
+          "trend_type": 5,
+          "description": "先低值平稳，随后显著上升并维持高位"
+        },
+        "13": {
+          "parameter": "血尿素氮BUN(mg/dL)",
+          "trend_type": 5,
+          "description": "先低值平稳，随后显著上升并维持高位"
+        },
+        "14": {
+          "parameter": "乳酸(mmol/L)",
+          "trend_type": 1,
+          "description": "恒定在1.0"
+        },
+        "15": {
+          "parameter": "氧合指数P/F比值",
+          "trend_type": 1,
+          "description": "全程基本不变(约160)"
+        },
+        "16": {
+          "parameter": "快速浅呼吸指数RSBI(次/分/升)",
+          "trend_type": 2,
+          "description": "在31-40范围内波动，无明确单向趋势"
+        }
+      }
+    },
+    "step2_response": "{\n  \"analysis\": \"患者男，62岁（不存在“≥90岁显示为300”的情况）。过去12小时生命体征整体稳定：心率82-89次/分、平均动脉压92-116mmHg且无需血管活性药，提示循环储备尚可；呼吸频率15-19.5次/分，无进行性增快；潮气量约480mL稳定，PEEP=5cmH2O为低水平支持。通气/酸碱方面：PaCO2约37mmHg稳定，提示通气能力足够；pH 7.32-7.33为轻度酸中毒但不伴CO2潴留，短期内因通气失败导致二氧化碳潴留而需要紧急再插管的风险相对低。脱机耐受关键指标RSBI约31-40（显著低于常用阈值105），支持拔管后发生呼吸肌疲劳/通气衰竭的概率较低。主要风险点在于氧合：P/F比值约160，为中度氧合受损的边缘水平（虽满足部分拔管最低门槛，但储备不充足），拔管后若出现分泌物潴留、肺不张或心源性/容量相关肺水肿，可能较快恶化；同时肾功能指标肌酐0.8→8.9mg/dL、BUN 14→62mg/dL显著上升，提示重度肾功能不全/急性肾损伤，容量管理不佳可增加氧合恶化风险。神志方面GCS曾降至9后回升至15，若当前确已清醒并具备有效咳嗽/气道保护，则拔管成功率提高；反之若仍有嗜睡或镇静残留，则再插管风险会明显上升。综合来看：通气能力与呼吸肌负荷指标（PaCO2、RSBI、RR、VT）支持拔管成功，循环稳定；氧合边缘和肾功能不全增加失败风险，但从现有数据推断，6小时内因呼吸衰竭必须再插管的概率不高，属于“可拔但需严密监测、优先考虑拔管后氧疗/无创支持”的级别。\",\n  \"conclusion\": \"否\"\n}",
+    "Analysis": "患者男，62岁（不存在“≥90岁显示为300”的情况）。过去12小时生命体征整体稳定：心率82-89次/分、平均动脉压92-116mmHg且无需血管活性药，提示循环储备尚可；呼吸频率15-19.5次/分，无进行性增快；潮气量约480mL稳定，PEEP=5cmH2O为低水平支持。通气/酸碱方面：PaCO2约37mmHg稳定，提示通气能力足够；pH 7.32-7.33为轻度酸中毒但不伴CO2潴留，短期内因通气失败导致二氧化碳潴留而需要紧急再插管的风险相对低。脱机耐受关键指标RSBI约31-40（显著低于常用阈值105），支持拔管后发生呼吸肌疲劳/通气衰竭的概率较低。主要风险点在于氧合：P/F比值约160，为中度氧合受损的边缘水平（虽满足部分拔管最低门槛，但储备不充足），拔管后若出现分泌物潴留、肺不张或心源性/容量相关肺水肿，可能较快恶化；同时肾功能指标肌酐0.8→8.9mg/dL、BUN 14→62mg/dL显著上升，提示重度肾功能不全/急性肾损伤，容量管理不佳可增加氧合恶化风险。神志方面GCS曾降至9后回升至15，若当前确已清醒并具备有效咳嗽/气道保护，则拔管成功率提高；反之若仍有嗜睡或镇静残留，则再插管风险会明显上升。综合来看：通气能力与呼吸肌负荷指标（PaCO2、RSBI、RR、VT）支持拔管成功，循环稳定；氧合边缘和肾功能不全增加失败风险，但从现有数据推断，6小时内因呼吸衰竭必须再插管的概率不高，属于“可拔但需严密监测、优先考虑拔管后氧疗/无创支持”的级别。",
+    "Conclusion": "No",
+    "conclusion_parsed": true,
+    "total_response_time_sec": 108.761,
+    "input_tokens": 6827,
+    "output_tokens": 3627,
+    "total_tokens": 10454,
+    "reasoning_tokens": 1390,
+    "raw_step2": {
+      "id": "gen-1770003906-m3WJ0puLqYL1kDA2yynH",
+      "choices": [
+        {
+          "finish_reason": "stop",
+          "index": 0,
+          "logprobs": null,
+          "message": {
+            "content": "{\n  \"analysis\": \"患者男，62岁（不存在“≥90岁显示为300”的情况）。过去12小时生命体征整体稳定：心率82-89次/分、平均动脉压92-116mmHg且无需血管活性药，提示循环储备尚可；呼吸频率15-19.5次/分，无进行性增快；潮气量约480mL稳定，PEEP=5cmH2O为低水平支持。通气/酸碱方面：PaCO2约37mmHg稳定，提示通气能力足够；pH 7.32-7.33为轻度酸中毒但不伴CO2潴留，短期内因通气失败导致二氧化碳潴留而需要紧急再插管的风险相对低。脱机耐受关键指标RSBI约31-40（显著低于常用阈值105），支持拔管后发生呼吸肌疲劳/通气衰竭的概率较低。主要风险点在于氧合：P/F比值约160，为中度氧合受损的边缘水平（虽满足部分拔管最低门槛，但储备不充足），拔管后若出现分泌物潴留、肺不张或心源性/容量相关肺水肿，可能较快恶化；同时肾功能指标肌酐0.8→8.9mg/dL、BUN 14→62mg/dL显著上升，提示重度肾功能不全/急性肾损伤，容量管理不佳可增加氧合恶化风险。神志方面GCS曾降至9后回升至15，若当前确已清醒并具备有效咳嗽/气道保护，则拔管成功率提高；反之若仍有嗜睡或镇静残留，则再插管风险会明显上升。综合来看：通气能力与呼吸肌负荷指标（PaCO2、RSBI、RR、VT）支持拔管成功，循环稳定；氧合边缘和肾功能不全增加失败风险，但从现有数据推断，6小时内因呼吸衰竭必须再插管的概率不高，属于“可拔但需严密监测、优先考虑拔管后氧疗/无创支持”的级别。\",\n  \"conclusion\": \"否\"\n}",
+            "refusal": null,
+            "role": "assistant",
+            "annotations": null,
+            "audio": null,
+            "function_call": null,
+            "tool_calls": null,
+            "reasoning": "**Considering reintubation risks**\n\nI’m thinking that if extubation criteria are met, it’s likely that reintubation won’t be needed within six hours. However, with a P/F ratio of 160, there’s still a moderate risk. Without more information, I’d lean towards “no” but want to highlight the risk involved. I can note that oxygenation is borderline, there’s kidney dysfunction, but the RSBI is low, respiratory rate is stable, and hemodynamics and GCS are improved. I'll structure this as JSON.",
+            "reasoning_details": [
+              {
+                "format": "openai-responses-v1",
+                "index": 0,
+                "type": "reasoning.summary",
+                "summary": "**Considering reintubation risks**\n\nI’m thinking that if extubation criteria are met, it’s likely that reintubation won’t be needed within six hours. However, with a P/F ratio of 160, there’s still a moderate risk. Without more information, I’d lean towards “no” but want to highlight the risk involved. I can note that oxygenation is borderline, there’s kidney dysfunction, but the RSBI is low, respiratory rate is stable, and hemodynamics and GCS are improved. I'll structure this as JSON."
+              },
+              {
+                "id": "rs_016c2b3c4dccb0b40169801dc642b88196bfe84528c8aead10",
+                "format": "openai-responses-v1",
+                "index": 0,
+                "type": "reasoning.encrypted",
+                "data": "gAAAAABpgB3RntlQukhcF0y_ysLqXj3cbGjeVorL5-g8WrOuno-kBCzb2fiZeeNLUMPd1ilabTbfgW6M_DvOW3uzb3IgXvkebpeuuxAbsd9eQWD5XQe8e-4io8iDR4q9NNhr__-V5i01l96EUP_XfMuOnvfUM31f4-OMpU0yIkLfhoJuxhvW6nhk1TUbmsoSA8Juidi8QliJdtUiKXf7mdHJo4Ku8hObSlcn3ov3yI0gpieWUFyfh5pfhk_zQ8iqlJalZ_iegLBSSh-dertj4twBpudQ6hAM1SpF52KhQe1WvQP2YQRvuVSuLAV6sCCDk3-NnsD-qmbda9SqEeKr2q1kPbJ-wF_fQEQbqzVYckpZ7IUF4W9hUmfjVII8kFcXS_CvQLNLlQnXb_e3YYv0KVB6Idslkiin02fF3puT16XYMW-S4PVJs0s-KsQCnx1SrrLViWOBjx_Y2JdkV8Qpih1jCn8WZjdPP5VUUlypJi3HfG-0HRJlk4Fid1qVFU0T_1IQd8XpkqoUP1mtCHtyBpQossPcfaJcL-Sv_2NgdfEaA8DT2Y_2SSl--4ZOHSq58GVfSP8iZX5Dg5OOQx5gaUTaxrbaKYdfY_IJKrWIRCqBCvQNZ5XYQmv1sP5_w3W1o8EwQOUKTzXSGR7Pl9uXp3nIFtdnWLfeCUwSVUl3yW5j8VJWNgvhEivampalMMngZYw_qQwl3xfO0RmH32IYSH9NUlo9FRepIu_QnJvvPPAoCFcAH4nctHpLTsW5SFnCkq3j1SyP3F9aQZk0z-Px_REqF782MN0RE00ucrJ1QyclRUaNTSom_Agj0D9--poyLuMIDWH8bgXWxr09xJgDF6H1lG851ddxakAa9WPbYZT-hmbPEMBOLhVkhzAvHXgqGg4BlHMsT9VKF81__tcC0WQS7OzPeYg2Q5DspYC9_Re5JBnTpwIPRPX-D_UIB21YxPTj8yW3kjriM2u72T8ScFDCgMhuAhtn2k4uCnshhMyRrg5Gc58CW_BjQEPyj5Zu0Uo10ixbKSyoIg-ffR0V8QKUsn5Zp3s154uXfEA5BuKAICMcwlMHKmMJqx9vRiPNl56MiLjYPub5Ui1rLU6be_NVFcKhQZ5jcJsOVJgluJpFiYgWbvuYnRJykTr9rDpCKmzLzASpOH0jYP_sIwHBofa5FPkSba84srV-nLqFO0Ilx75vbWa8AJlOmAjbtXBNMBBSbqgL46SWxVJM2ECeQca4xNpbVGM4fAUUV5AMrOhk9nTXubTvkwj47niUd0qSZZOzugWcEzBEgnYtSjRVure-8WTSL9DptZiX2Yk59l7voashNly3jtQKB3fe9llHYzCsw4ehZ3V7H-9f44tbx7ffBO6vgaJ-TDTMkWpY53oYc9rU4YVEik5hnq0DlsXONMvztb0rfOBIgPpP8Np8f6nlNBFC1GCJBDoKFve_vAKeVcSFL1FhoTrwkLhRUi4bAwtAbAES05JB_qIUek446uLuXGtWaiTvGUXvXf0TwSqDDwdJxddA11H6O9ExyeH2YCFyX8NLeKPe92xXxr332NJ8_UZQ3YLXOzXLqw2SHtx1h0NyOdAe7QHOtNjt8m1VXbgZwfkVp9Vg3UZJquTnRbBRgkx4_2UWTuhNpjEXbbDzdBuSZSaYNdMla_NDXWXcy1eaUkYD_vtR8Wq0ZUDqbvMzO7FUM4E5jElGm7MtCx0Rb0lZAAxCCi0f-gVAecKc2qii9aX7VEjDwVUzo2rREcQVBGMiAXmFO-OGiWVlsBn8V8YZ9WnZaUwL3UJYPUtqDUFhfmRHF7KNbn0x_BNQdNJumq2Q2e7sLfUc_NyWbk-SJ8yAaj_oLT78H0qVmvFPuk_vfmMxZcYG0zickTnRtRonEraX268eHq5N3pCUnD-hPYvzZjB4qh7rBu4GV9tvbsIVqlPyUTGm2qye8IKrHk7sYLXRPx9fXDHb-QlnYHWDc_pcxEIgo385Zt6tTqP4UzgvhNCRiz5GBlch4aLtowXCejhyCEWEozbFlP0DK29t2jVMYT4l6lo3lB3gvQadK2NYCoD7OlwBZa9vlzLy7muaUNqBk5DePD8y0V3tEG7trLCCnPJEP0jPlQv82fEhdGjaNR2jW9r7PrZ7XlLK_xMRI2iHJKBPaLqwysKyO5TCcPdAXUAMK8jSVMbk6PNv10L0ob40W-1ry8mCU6dX3-IUXSj44JfXyg7sUcavhplMd2G7010AnAl4ZV0kW__OnLU_FaG-xPx7VdT0etkeWVA7TBWl0bJ8PThQ-iiLwgqnBZ5DjVHR0UnJ3YSVsu3SX1f2GmLlxSpWsNajxmhK57QW9XtJzUHG_T8uMk0HmTk-XqS_P4I3XEB4hCij4SLP1bowPYTTmVa35wf2rsQ_cVJmJeVHI96F7FvTzC2Te57P_zmUT3voh7yDK0BuvUx9Vp2AQxbCtY_pwWcLdhcjzuWLxZCqAqQaNsUDe-0E_rKQLWIBVM8kaJqXwOeXpzA88ud8cvvW1lelquGw7K8aPETPL_rTMR2LK1tOwplihLwyb7doQE17qJJh4byCgOBeuS0DvJ2wFCzl2J1KLFWM201P0USJFfFH9oE5kVAC92mZxirvNYdU4MguAjmTF7N12fegP8xPRzSt"
+              }
+            ]
+          },
+          "native_finish_reason": "completed"
+        }
+      ],
+      "created": 1770003906,
+      "model": "openai/gpt-5.2",
+      "object": "chat.completion",
+      "service_tier": null,
+      "system_fingerprint": null,
+      "usage": {
+        "completion_tokens": 916,
+        "prompt_tokens": 4336,
+        "total_tokens": 5252,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 371,
+          "rejected_prediction_tokens": null,
+          "image_tokens": 0
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        },
+        "cost": 0.020412,
+        "is_byok": false,
+        "cost_details": {
+          "upstream_inference_cost": 0.020412,
+          "upstream_inference_prompt_cost": 0.007588,
+          "upstream_inference_completions_cost": 0.012824
+        }
+      },
+      "provider": "OpenAI"
+    },
+    "attempts": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "healthbench": {
+    "prompt_id": "e126273b-9d59-4a79-9bb0-391db5f8eb0a"
+  },
+  "mimic_iii": {
+    "fig_idx": 113,
+    "patient_id": 3824
+  },
+  "doctorpeng": {
+    "patient_id": 1
+  }
+}

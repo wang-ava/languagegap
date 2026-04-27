@@ -1,0 +1,11 @@
+{
+  "patient_id": 3824,
+  "language": "English",
+  "source_language": "Mandarin Chinese",
+  "source_language_key": "chinese",
+  "source_diagnosis": "心绞痛加重；冠状动脉疾病\\左心导管术",
+  "diagnosis": "INCREASED ANGINA;CORONARY ARTERY DISEASE\\LEFT HEART CATHETERIZATION",
+  "fig_idx": 113,
+  "derived_from": "MIMIC-III/result/translate_back/google_gemini-3-pro-preview/figures/chinese/patient/patient_113_meta.json",
+  "note": "This repository snapshot does not contain a matching row for this patient in chinese_back_to_english.jsonl, so the pivot diagnosis is recovered from the generated English figure metadata."
+}

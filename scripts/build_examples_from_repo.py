@@ -1,0 +1,283 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import copy
+import json
+import shutil
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional
+
+from common import read_json_objects, write_json
+
+
+def find_by_key(rows: Iterable[Dict[str, Any]], key: str, value: Any) -> Optional[Dict[str, Any]]:
+    for row in rows:
+        if isinstance(row, dict) and row.get(key) == value:
+            return row
+    return None
+
+
+def find_required_by_key(rows: Iterable[Dict[str, Any]], key: str, value: Any, label: str) -> Dict[str, Any]:
+    row = find_by_key(rows, key, value)
+    if row is None:
+        raise ValueError(f"Could not find {label} where {key}={value!r}.")
+    return row
+
+
+def repo_relative_path(repo_root: Path, path: Path) -> str:
+    try:
+        return path.resolve().relative_to(repo_root.resolve()).as_posix()
+    except ValueError:
+        return str(path.resolve())
+
+
+def normalize_doctorpeng_summary_case(original_case: Dict[str, Any], summary_case: Dict[str, Any]) -> Dict[str, Any]:
+    normalized = copy.deepcopy(original_case)
+    predicted = summary_case.get("medical_record")
+    if not isinstance(predicted, dict):
+        raise ValueError(
+            f"DoctorPeng summary row for patient_id={original_case.get('patient_id')} is missing dict medical_record."
+        )
+    normalized["predicted_medical_record"] = predicted
+    normalized["summary_output_layout"] = "production_summary_replaces_medical_record"
+    return normalized
+
+
+def export_healthbench(repo_root: Path, output_root: Path) -> Dict[str, Any]:
+    original_rows = [
+        row for row in read_json_objects(repo_root / "Healthbench/dataset/hard_2025-05-08-21-00-10_english_only_sample_100.jsonl")
+        if isinstance(row, dict)
+    ]
+    translation_rows = [
+        row for row in read_json_objects(repo_root / "Healthbench/result/translate/google_gemini-3-pro-preview/chinese_translation.jsonl")
+        if isinstance(row, dict)
+    ]
+    back_rows = [
+        row for row in read_json_objects(repo_root / "Healthbench/result/translate_back/google_gemini-3-pro-preview/chinese_back_translation.jsonl")
+        if isinstance(row, dict)
+    ]
+    response_rows = json.loads(
+        (repo_root / "Healthbench/result/response/google_gemini-3-pro-preview/ZH/round1.json").read_text(encoding="utf-8")
+    )
+    response_case = next(row for row in response_rows if row.get("response"))
+    prompt_id = response_case["prompt_id"]
+
+    original_case = find_required_by_key(original_rows, "prompt_id", prompt_id, "HealthBench original case")
+    translation_case = find_required_by_key(translation_rows, "prompt_id", prompt_id, "HealthBench translation case")
+    back_case = find_required_by_key(back_rows, "prompt_id", prompt_id, "HealthBench back-translation case")
+
+    case_dir = output_root / "healthbench"
+    write_json(
+        case_dir / "original_case.json",
+        {
+            "prompt_id": prompt_id,
+            "prompt": original_case.get("prompt"),
+            "ideal_completions_data": original_case.get("ideal_completions_data"),
+            "rubrics_preview": (original_case.get("rubrics") or [])[:3],
+        },
+    )
+    write_json(
+        case_dir / "zh_translation_case.json",
+        {
+            "prompt_id": prompt_id,
+            "translation": translation_case.get("translation"),
+            "translation_meta": translation_case.get("translation_meta"),
+        },
+    )
+    write_json(
+        case_dir / "zh_back_translation_case.json",
+        {
+            "prompt_id": prompt_id,
+            "back_translation": back_case.get("prompt"),
+        },
+    )
+    write_json(
+        case_dir / "zh_model_response_round1.json",
+        {
+            "prompt_id": response_case.get("prompt_id"),
+            "language": response_case.get("language"),
+            "round": response_case.get("round"),
+            "response": response_case.get("response"),
+            "error": response_case.get("error"),
+        },
+    )
+    return {"prompt_id": prompt_id}
+
+
+def export_mimic_iii(repo_root: Path, output_root: Path) -> Dict[str, Any]:
+    translation_rows = [
+        row
+        for row in read_json_objects(
+            repo_root / "MIMIC-III/result/translate/google_gemini-3-pro-preview/Chinese&Malay/chinese_translation.jsonl"
+        )
+        if isinstance(row, dict)
+    ]
+    back_translation_rows = [
+        row
+        for row in read_json_objects(
+            repo_root / "MIMIC-III/result/translate_back/google_gemini-3-pro-preview/chinese_back_to_english.jsonl"
+        )
+        if isinstance(row, dict)
+    ]
+
+    zh_responses = json.loads(
+        (repo_root / "MIMIC-III/result/response copy/openai_gpt-5.2_1/Chinese/round1.json").read_text(encoding="utf-8")
+    )
+    zh_case = zh_responses[0]
+    fig_idx = int(str(zh_case["patient_id"]).split("_")[-1])
+
+    original_meta = json.loads(
+        (repo_root / f"MIMIC-III/dataset/data/figure/patient/patient_{fig_idx}_meta.json").read_text(encoding="utf-8")
+    )
+    patient_id = original_meta["patient_id"]
+
+    translation_example = find_required_by_key(
+        translation_rows,
+        "patient_id",
+        patient_id,
+        "MIMIC-III diagnosis translation example",
+    )
+
+    back_translation_example = find_by_key(back_translation_rows, "patient_id", patient_id)
+    back_en_meta = json.loads(
+        (
+            repo_root
+            / f"MIMIC-III/result/translate_back/google_gemini-3-pro-preview/figures/chinese/patient/patient_{fig_idx}_meta.json"
+        ).read_text(encoding="utf-8")
+    )
+    if back_translation_example is None:
+        back_translation_example = {
+            "patient_id": patient_id,
+            "language": "English",
+            "source_language": "Mandarin Chinese",
+            "source_language_key": "chinese",
+            "source_diagnosis": translation_example.get("diagnosis"),
+            "diagnosis": back_en_meta.get("diagnosis"),
+            "fig_idx": fig_idx,
+            "derived_from": (
+                "MIMIC-III/result/translate_back/google_gemini-3-pro-preview/figures/chinese/"
+                f"patient/patient_{fig_idx}_meta.json"
+            ),
+            "note": (
+                "This repository snapshot does not contain a matching row for this patient in "
+                "chinese_back_to_english.jsonl, so the pivot diagnosis is recovered from the generated English figure metadata."
+            ),
+        }
+
+    back_en_responses = json.loads(
+        (repo_root / "MIMIC-III/result/response_back_in_english copy/openai_gpt-4o/Chinese/round1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    back_en_case = next(row for row in back_en_responses if row.get("patient_id") == f"patient_{fig_idx}")
+
+    zh_image_path = repo_root / f"MIMIC-III/dataset/data/figure/chinese/patient_{fig_idx}_chinese.jpg"
+    back_en_image_path = (
+        repo_root / f"MIMIC-III/result/translate_back/google_gemini-3-pro-preview/figures/chinese/patient_{fig_idx}_english.jpg"
+    )
+    if not back_en_image_path.exists():
+        back_en_image_path = repo_root / f"MIMIC-III/dataset/data/figure/english/patient_{fig_idx}_english.jpg"
+
+    zh_case = copy.deepcopy(zh_case)
+    zh_case["image_path"] = repo_relative_path(repo_root, zh_image_path)
+    back_en_case = copy.deepcopy(back_en_case)
+    back_en_case["image_path"] = repo_relative_path(repo_root, back_en_image_path)
+
+    case_dir = output_root / "mimic_iii"
+    write_json(case_dir / "diagnosis_translation_example.json", translation_example)
+    write_json(case_dir / "diagnosis_back_translation_example.json", back_translation_example)
+    write_json(case_dir / "original_figure_meta.json", original_meta)
+    write_json(case_dir / "back_translated_figure_meta.json", back_en_meta)
+    write_json(case_dir / "zh_model_response_round1.json", zh_case)
+    write_json(case_dir / "zh_back_in_english_response_round1.json", back_en_case)
+    return {"fig_idx": fig_idx, "patient_id": patient_id}
+
+
+def export_doctorpeng(repo_root: Path, output_root: Path) -> Dict[str, Any]:
+    original_rows = [
+        row for row in read_json_objects(repo_root / "doctorpeng/data/dialogue_quality_sample_50.jsonl") if isinstance(row, dict)
+    ]
+    en_translation_rows = [
+        row
+        for row in read_json_objects(repo_root / "doctorpeng/result/translate/google_gemini-3-pro-preview/english_translation.jsonl")
+        if isinstance(row, dict)
+    ]
+    en_summary_rows = [
+        row
+        for row in read_json_objects(
+            repo_root / "doctorpeng/result/summary/qwen_qwen3-vl-235b-a22b-thinking/english_summary.jsonl"
+        )
+        if isinstance(row, dict)
+    ]
+    en_back_rows = [
+        row
+        for row in read_json_objects(
+            repo_root / "doctorpeng/result/translate_back/google_gemini-3-pro-preview/english_back_to_chinese.jsonl"
+        )
+        if isinstance(row, dict)
+    ]
+    en_back_summary_rows = [
+        row
+        for row in read_json_objects(
+            repo_root / "doctorpeng/result/summary_back/qwen_qwen3-vl-235b-a22b-thinking/english_back_to_chinese_summary.jsonl"
+        )
+        if isinstance(row, dict)
+    ]
+
+    patient_id = original_rows[0]["patient_id"]
+    original_case = find_required_by_key(original_rows, "patient_id", patient_id, "DoctorPeng original case")
+    translation_case = find_required_by_key(
+        en_translation_rows,
+        "patient_id",
+        patient_id,
+        "DoctorPeng English translation case",
+    )
+    summary_case = find_required_by_key(en_summary_rows, "patient_id", patient_id, "DoctorPeng English summary case")
+    back_case = find_required_by_key(en_back_rows, "patient_id", patient_id, "DoctorPeng English back-translation case")
+    back_summary_case = find_required_by_key(
+        en_back_summary_rows,
+        "patient_id",
+        patient_id,
+        "DoctorPeng English back-to-Chinese summary case",
+    )
+
+    case_dir = output_root / "doctorpeng"
+    write_json(case_dir / "original_dialogue_case.json", original_case)
+    write_json(case_dir / "english_translation_case.json", translation_case)
+    write_json(case_dir / "english_summary_case.json", normalize_doctorpeng_summary_case(original_case, summary_case))
+    write_json(case_dir / "english_back_to_chinese_case.json", back_case)
+    write_json(
+        case_dir / "english_back_to_chinese_summary_case.json",
+        normalize_doctorpeng_summary_case(original_case, back_summary_case),
+    )
+    return {"patient_id": patient_id}
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Extract a few reviewer-friendly examples from the full repository.")
+    parser.add_argument("--repo-root", default=".", help="Path to the full repository root.")
+    parser.add_argument(
+        "--output-root",
+        default=None,
+        help="Defaults to examples under the current script's parent directory.",
+    )
+    args = parser.parse_args()
+
+    repo_root = Path(args.repo_root).resolve()
+    default_output = Path(__file__).resolve().parent.parent / "examples"
+    output_root = Path(args.output_root).resolve() if args.output_root else default_output
+
+    for stale_dir in ("healthbench", "mimic_iii", "doctorpeng", "realworld"):
+        shutil.rmtree(output_root / stale_dir, ignore_errors=True)
+
+    manifest = {
+        "healthbench": export_healthbench(repo_root, output_root),
+        "mimic_iii": export_mimic_iii(repo_root, output_root),
+        "doctorpeng": export_doctorpeng(repo_root, output_root),
+    }
+    write_json(output_root / "manifest.json", manifest)
+
+
+if __name__ == "__main__":
+    main()

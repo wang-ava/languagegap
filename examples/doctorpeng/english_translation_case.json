@@ -1,0 +1,196 @@
+{
+  "record_type": "patient_dialogue",
+  "section": "high_quality",
+  "section_title": "第一部分：高质量对话（136人）",
+  "serial_index_in_section": 1,
+  "heading": "1. 患者1",
+  "patient_label": "患者1",
+  "patient_id": 1,
+  "source_file": "20260305.docx",
+  "dialogue_quality_raw": "高（对话轮次16轮）",
+  "dialogue_quality": "high",
+  "dialogue_rounds_reported": 16,
+  "has_image_info_marker": true,
+  "medical_record": {
+    "chief_complaint": "双眼抗青光眼术后2年诉双眼疼痛",
+    "history_of_present_illness": "患者诉双眼抗青光眼术后2年，诉双眼疼痛伴异物感、干涩。当时未引起重视，半月前感左眼眼眶不适，于XX医院门诊就诊，门诊诊断为“双眼慢性闭角型青光眼”，予以“马来酸噻吗洛尔滴眼液、布林佐胺滴眼液、酒石酸溴莫尼定滴眼液”降眼压、“益脉康”营养神经治疗，患者今感视物范围缩窄明显，影响生活，遂来XX医院门诊复诊",
+    "past_history": "否认高血压病、糖尿病",
+    "allergy_history": "否认过敏史",
+    "genetic_history": null,
+    "personal_history": null,
+    "physical_exam": null,
+    "specialist_exam_summary": null,
+    "preliminary_diagnosis": null
+  },
+  "audio_status": {
+    "has_primary_transcript_marker": true,
+    "no_matching_audio_record": false,
+    "has_supplementary_transcript": false
+  },
+  "supplementary_audio": {
+    "timestamp_duration_raw": null,
+    "keywords_raw": null
+  },
+  "conversation_turns": [
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "Okay, come. Give me the medical record."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "Called Chen Yue, Chen Yue ah. Left eye understood."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 2",
+      "speaker_id": 2,
+      "timestamp": null,
+      "text": "March 2, 2 years. Done to, these few years here did two, three times surgeries, one old bought medicine here, eyes swelling pain to death ga."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "Where are today's results? So many medical record books."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 2",
+      "speaker_id": 2,
+      "timestamp": null,
+      "text": "Haven't come today yet."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "So what's wrong now? Just a routine follow-up, right? Don't have any other discomforts. Hurts. Which eye hurts? Both eyes hurt a little, right? Used for a long time."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 2",
+      "speaker_id": 2,
+      "timestamp": null,
+      "text": "Have [ba] finished surgery no? Went to the hospital a long time ago."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "This is good, your eye pressure has come down, you did the glaucoma surgery?"
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 2",
+      "speaker_id": 2,
+      "timestamp": null,
+      "text": "Glaucoma surgery. It was glaucoma that was done. It was glaucoma that was done."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "Don't have high blood pressure, diabetes, these problems, right. No."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 2",
+      "speaker_id": 2,
+      "timestamp": null,
+      "text": "No. Had a nosebleed, right."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "You are just that most recent surgery was done when? You already."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 2",
+      "speaker_id": 2,
+      "timestamp": null,
+      "text": "This year got the first time, done how many times? Here?"
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "The most recent time I ask you."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 2",
+      "speaker_id": 2,
+      "timestamp": null,
+      "text": "Recently was last year."
+    },
+    {
+      "speaker_format": "en",
+      "speaker_label": "说话人 1",
+      "speaker_id": 1,
+      "timestamp": null,
+      "text": "What surgery was done? Jingbi combined surgery ah. I flip slower. No? I ask you faster. No? I flip flip half a day just is asking you no? You remember, you just say no."
+    }
+  ],
+  "notes": [],
+  "raw_lines": [
+    "1. 患者1",
+    "来源文件：20260305.docx",
+    "对话质量：高（对话轮次16轮）",
+    "患者1",
+    "图片信息",
+    "主诉：双眼抗青光眼术后2年诉双眼疼痛",
+    "现病史：患者诉双眼抗青光眼术后2年，诉双眼疼痛伴异物感、干涩。当时未引起重视，半月前感左眼眼眶不适，于XX医院门诊就诊，门诊诊断为“双眼慢性闭角型青光眼”，予以“马来酸噻吗洛尔滴眼液、布林佐胺滴眼液、酒石酸溴莫尼定滴眼液”降眼压、“益脉康”营养神经治疗，患者今感视物范围缩窄明显，影响生活，遂来XX医院门诊复诊",
+    "既往史：否认高血压病、糖尿病",
+    "过敏史：否认过敏史",
+    "语音转文字内容（对话记录）",
+    "说话人 1",
+    "好，来。病历给我。",
+    "说话人 1",
+    "叫陈月，陈月啊。左眼明白。",
+    "说话人 2",
+    "3月2，2年了。做到，这几年在这里做了两次、三次手术，一老在这里买药了，眼睛肿痛死嘎。",
+    "说话人 1",
+    "今天的结果在哪里？这么多病历本。",
+    "说话人 2",
+    "今天还没来过。",
+    "说话人 1",
+    "那现在是怎么了？就是常规复查，是吧？没得什么其他的不舒服啦。疼。哪个眼睛疼啊？一双眼睛都有点痛，是吧？用了好久了。",
+    "说话人 2",
+    "有把做完手术没？好久就到医院去了。",
+    "说话人 1",
+    "这是好的，你的眼压降下来了，你是做的青光眼手术了？",
+    "说话人 2",
+    "青光手术。是做的青光。是做的青光。",
+    "说话人 1",
+    "没有高血压、糖尿病这些问题吧。没有。",
+    "说话人 2",
+    "没有啊。流鼻血了吧。",
+    "说话人 1",
+    "你就是那个最近一次手术是什么时候做的？你已经。",
+    "说话人 2",
+    "今年打的第一次，做了几次了？在这里？",
+    "说话人 1",
+    "最近的一次我问你。",
+    "说话人 2",
+    "最近就是去年。",
+    "说话人 1",
+    "做的什么手术？经闭联合术啊。我翻慢些。不？我问你快些。不？我翻翻半天就是问你不？你记得，你就说不。",
+    "患者1",
+    "────────────────────────────────────────────────────────────"
+  ],
+  "unparsed_lines": []
+}
