@@ -11,6 +11,21 @@ from typing import Any, Dict, Iterable, List, Optional
 from common import read_json_objects, write_json
 
 
+DOCTOR_REVIEW_FIELDS = [
+    "chief_complaint",
+    "history_of_present_illness",
+    "past_history",
+    "personal_history",
+    "allergy_history",
+    "genetic_history",
+]
+
+DOCTOR_REVIEW_TABLE_LABELS = {
+    "table2": "English Summary",
+    "table4": "English-to-Chinese Back-Translation",
+}
+
+
 def find_by_key(rows: Iterable[Dict[str, Any]], key: str, value: Any) -> Optional[Dict[str, Any]]:
     for row in rows:
         if isinstance(row, dict) and row.get(key) == value:
@@ -42,6 +57,92 @@ def normalize_doctorpeng_summary_case(original_case: Dict[str, Any], summary_cas
     normalized["predicted_medical_record"] = predicted
     normalized["summary_output_layout"] = "production_summary_replaces_medical_record"
     return normalized
+
+
+def compute_review_table_summary(table_id: str, rows: List[Dict[str, Any]]) -> Dict[str, Any]:
+    changed_field_count = 0
+    modified_record_count = 0
+    per_field_counts = {field: 0 for field in DOCTOR_REVIEW_FIELDS}
+    record_summaries = []
+
+    for row in rows:
+        edited = row.get("edited_report") or {}
+        original = row.get("original_current_report") or {}
+        changed_fields_for_record = 0
+        for field in DOCTOR_REVIEW_FIELDS:
+            edited_value = str(edited.get(field) or "").strip()
+            original_value = str(original.get(field) or "").strip()
+            if edited_value != original_value:
+                changed_field_count += 1
+                changed_fields_for_record += 1
+                per_field_counts[field] += 1
+        modified = changed_fields_for_record > 0
+        if modified:
+            modified_record_count += 1
+        record_summaries.append(
+            {
+                "uid": row.get("uid"),
+                "row_index": row.get("row_index"),
+                "patient_id": row.get("patient_id"),
+                "changed_field_count": changed_fields_for_record,
+                "record_score": round(changed_fields_for_record / len(DOCTOR_REVIEW_FIELDS), 6),
+                "modified": modified,
+            }
+        )
+
+    sample_count = len(rows)
+    total_field_slots = sample_count * len(DOCTOR_REVIEW_FIELDS)
+    modification_score = changed_field_count / total_field_slots if total_field_slots else 0.0
+    modification_rate = modified_record_count / sample_count if sample_count else 0.0
+    return {
+        "table_id": table_id,
+        "title": DOCTOR_REVIEW_TABLE_LABELS.get(table_id, table_id),
+        "sample_count": sample_count,
+        "changed_field_count": changed_field_count,
+        "total_field_slots": total_field_slots,
+        "modification_score": round(modification_score, 6),
+        "modification_score_percent": round(modification_score * 100, 2),
+        "modified_record_count": modified_record_count,
+        "modified_rate": round(modification_rate, 6),
+        "modified_rate_percent": round(modification_rate * 100, 2),
+        "per_field_counts": per_field_counts,
+        "records": record_summaries,
+    }
+
+
+def build_example_modification_summary(table_summaries: List[Dict[str, Any]]) -> Dict[str, Any]:
+    overall_changed_field_count = sum(table["changed_field_count"] for table in table_summaries)
+    overall_total_field_slots = sum(table["total_field_slots"] for table in table_summaries)
+    overall_modified_record_count = sum(table["modified_record_count"] for table in table_summaries)
+    overall_record_count = sum(table["sample_count"] for table in table_summaries)
+    overall_per_field_counts = {field: 0 for field in DOCTOR_REVIEW_FIELDS}
+    for table in table_summaries:
+        for field in DOCTOR_REVIEW_FIELDS:
+            overall_per_field_counts[field] += table["per_field_counts"][field]
+
+    overall_modification_score = (
+        overall_changed_field_count / overall_total_field_slots if overall_total_field_slots else 0.0
+    )
+    overall_modification_rate = (
+        overall_modified_record_count / overall_record_count if overall_record_count else 0.0
+    )
+    return {
+        "score_definition": "DoctorPeng doctor-edit modification score over 6 editable fields.",
+        "editable_field_count": len(DOCTOR_REVIEW_FIELDS),
+        "note": "Reviewer example summary includes only the exported table2 and table4 review files.",
+        "overall": {
+            "record_count": overall_record_count,
+            "changed_field_count": overall_changed_field_count,
+            "total_field_slots": overall_total_field_slots,
+            "modification_score": round(overall_modification_score, 6),
+            "modification_score_percent": round(overall_modification_score * 100, 2),
+            "modified_record_count": overall_modified_record_count,
+            "modified_rate": round(overall_modification_rate, 6),
+            "modified_rate_percent": round(overall_modification_rate * 100, 2),
+            "per_field_counts": overall_per_field_counts,
+        },
+        "tables": table_summaries,
+    }
 
 
 def export_healthbench(repo_root: Path, output_root: Path) -> Dict[str, Any]:
@@ -224,7 +325,18 @@ def export_doctorpeng(repo_root: Path, output_root: Path) -> Dict[str, Any]:
         )
         if isinstance(row, dict)
     ]
-
+    english_review_rows = json.loads(
+        (
+            repo_root
+            / "doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/result/edits_table2_english_summary_doctor_review (1).json"
+        ).read_text(encoding="utf-8")
+    )
+    english_back_review_rows = json.loads(
+        (
+            repo_root
+            / "doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/result/edits_table4_english_back_to_chinese_summary_doctor_review (1).json"
+        ).read_text(encoding="utf-8")
+    )
     patient_id = original_rows[0]["patient_id"]
     original_case = find_required_by_key(original_rows, "patient_id", patient_id, "DoctorPeng original case")
     translation_case = find_required_by_key(
@@ -241,6 +353,18 @@ def export_doctorpeng(repo_root: Path, output_root: Path) -> Dict[str, Any]:
         patient_id,
         "DoctorPeng English back-to-Chinese summary case",
     )
+    english_review_case = find_required_by_key(
+        english_review_rows,
+        "patient_id",
+        str(patient_id),
+        "DoctorPeng English doctor-review case",
+    )
+    english_back_review_case = find_required_by_key(
+        english_back_review_rows,
+        "patient_id",
+        str(patient_id),
+        "DoctorPeng English back-to-Chinese doctor-review case",
+    )
 
     case_dir = output_root / "doctorpeng"
     write_json(case_dir / "original_dialogue_case.json", original_case)
@@ -251,7 +375,22 @@ def export_doctorpeng(repo_root: Path, output_root: Path) -> Dict[str, Any]:
         case_dir / "english_back_to_chinese_summary_case.json",
         normalize_doctorpeng_summary_case(original_case, back_summary_case),
     )
-    return {"patient_id": patient_id}
+    write_json(case_dir / "english_summary_doctor_review_case.json", english_review_case)
+    write_json(case_dir / "english_back_to_chinese_doctor_review_case.json", english_back_review_case)
+    write_json(
+        case_dir / "modification_score_summary.json",
+        build_example_modification_summary(
+            [
+                compute_review_table_summary("table2", english_review_rows),
+                compute_review_table_summary("table4", english_back_review_rows),
+            ]
+        ),
+    )
+    return {
+        "patient_id": patient_id,
+        "english_review_uid": english_review_case.get("uid"),
+        "english_back_review_uid": english_back_review_case.get("uid"),
+    }
 
 
 def main() -> None:

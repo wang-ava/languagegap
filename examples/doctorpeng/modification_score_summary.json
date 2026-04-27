@@ -1,0 +1,869 @@
+{
+  "score_definition": "DoctorPeng doctor-edit modification score over 6 editable fields.",
+  "editable_field_count": 6,
+  "note": "Reviewer example summary includes only the exported table2 and table4 review files.",
+  "overall": {
+    "record_count": 100,
+    "changed_field_count": 281,
+    "total_field_slots": 600,
+    "modification_score": 0.468333,
+    "modification_score_percent": 46.83,
+    "modified_record_count": 97,
+    "modified_rate": 0.97,
+    "modified_rate_percent": 97.0,
+    "per_field_counts": {
+      "chief_complaint": 91,
+      "history_of_present_illness": 82,
+      "past_history": 63,
+      "personal_history": 0,
+      "allergy_history": 37,
+      "genetic_history": 8
+    }
+  },
+  "tables": [
+    {
+      "table_id": "table2",
+      "title": "English Summary",
+      "sample_count": 50,
+      "changed_field_count": 152,
+      "total_field_slots": 300,
+      "modification_score": 0.506667,
+      "modification_score_percent": 50.67,
+      "modified_record_count": 50,
+      "modified_rate": 1.0,
+      "modified_rate_percent": 100.0,
+      "per_field_counts": {
+        "chief_complaint": 49,
+        "history_of_present_illness": 43,
+        "past_history": 33,
+        "personal_history": 0,
+        "allergy_history": 23,
+        "genetic_history": 4
+      },
+      "records": [
+        {
+          "uid": "table2_english_summary:1",
+          "row_index": 1,
+          "patient_id": "1",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:2",
+          "row_index": 2,
+          "patient_id": "4",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:3",
+          "row_index": 3,
+          "patient_id": "5",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:4",
+          "row_index": 4,
+          "patient_id": "7",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:5",
+          "row_index": 5,
+          "patient_id": "12",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:6",
+          "row_index": 6,
+          "patient_id": "14",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:7",
+          "row_index": 7,
+          "patient_id": "22",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:8",
+          "row_index": 8,
+          "patient_id": "23",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:9",
+          "row_index": 9,
+          "patient_id": "25",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:10",
+          "row_index": 10,
+          "patient_id": "28",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:11",
+          "row_index": 11,
+          "patient_id": "29",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:12",
+          "row_index": 12,
+          "patient_id": "30",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:13",
+          "row_index": 13,
+          "patient_id": "31",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:14",
+          "row_index": 14,
+          "patient_id": "32",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:15",
+          "row_index": 15,
+          "patient_id": "38",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:16",
+          "row_index": 16,
+          "patient_id": "51",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:17",
+          "row_index": 17,
+          "patient_id": "64",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:18",
+          "row_index": 18,
+          "patient_id": "65",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:19",
+          "row_index": 19,
+          "patient_id": "68",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:20",
+          "row_index": 20,
+          "patient_id": "75",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:21",
+          "row_index": 21,
+          "patient_id": "77",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:22",
+          "row_index": 22,
+          "patient_id": "84",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:23",
+          "row_index": 23,
+          "patient_id": "85",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:24",
+          "row_index": 24,
+          "patient_id": "86",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:25",
+          "row_index": 25,
+          "patient_id": "90",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:26",
+          "row_index": 26,
+          "patient_id": "92",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:27",
+          "row_index": 27,
+          "patient_id": "102",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:28",
+          "row_index": 28,
+          "patient_id": "108",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:29",
+          "row_index": 29,
+          "patient_id": "111",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:30",
+          "row_index": 30,
+          "patient_id": "117",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:31",
+          "row_index": 31,
+          "patient_id": "122",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:32",
+          "row_index": 32,
+          "patient_id": "125",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:33",
+          "row_index": 33,
+          "patient_id": "129",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:34",
+          "row_index": 34,
+          "patient_id": "130",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:35",
+          "row_index": 35,
+          "patient_id": "136",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:36",
+          "row_index": 36,
+          "patient_id": "147",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:37",
+          "row_index": 37,
+          "patient_id": "149",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:38",
+          "row_index": 38,
+          "patient_id": "151",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:39",
+          "row_index": 39,
+          "patient_id": "156",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:40",
+          "row_index": 40,
+          "patient_id": "157",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:41",
+          "row_index": 41,
+          "patient_id": "163",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:42",
+          "row_index": 42,
+          "patient_id": "20",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:43",
+          "row_index": 43,
+          "patient_id": "41",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:44",
+          "row_index": 44,
+          "patient_id": "43",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:45",
+          "row_index": 45,
+          "patient_id": "56",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:46",
+          "row_index": 46,
+          "patient_id": "73",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:47",
+          "row_index": 47,
+          "patient_id": "78",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:48",
+          "row_index": 48,
+          "patient_id": "93",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:49",
+          "row_index": 49,
+          "patient_id": "118",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table2_english_summary:50",
+          "row_index": 50,
+          "patient_id": "158",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        }
+      ]
+    },
+    {
+      "table_id": "table4",
+      "title": "English-to-Chinese Back-Translation",
+      "sample_count": 50,
+      "changed_field_count": 129,
+      "total_field_slots": 300,
+      "modification_score": 0.43,
+      "modification_score_percent": 43.0,
+      "modified_record_count": 47,
+      "modified_rate": 0.94,
+      "modified_rate_percent": 94.0,
+      "per_field_counts": {
+        "chief_complaint": 42,
+        "history_of_present_illness": 39,
+        "past_history": 30,
+        "personal_history": 0,
+        "allergy_history": 14,
+        "genetic_history": 4
+      },
+      "records": [
+        {
+          "uid": "table4_english_back_to_chinese_summary:1",
+          "row_index": 1,
+          "patient_id": "1",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:2",
+          "row_index": 2,
+          "patient_id": "4",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:3",
+          "row_index": 3,
+          "patient_id": "5",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:4",
+          "row_index": 4,
+          "patient_id": "7",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:5",
+          "row_index": 5,
+          "patient_id": "12",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:6",
+          "row_index": 6,
+          "patient_id": "14",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:7",
+          "row_index": 7,
+          "patient_id": "22",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:8",
+          "row_index": 8,
+          "patient_id": "23",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:9",
+          "row_index": 9,
+          "patient_id": "25",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:10",
+          "row_index": 10,
+          "patient_id": "28",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:11",
+          "row_index": 11,
+          "patient_id": "29",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:12",
+          "row_index": 12,
+          "patient_id": "30",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:13",
+          "row_index": 13,
+          "patient_id": "31",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:14",
+          "row_index": 14,
+          "patient_id": "32",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:15",
+          "row_index": 15,
+          "patient_id": "38",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:16",
+          "row_index": 16,
+          "patient_id": "51",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:17",
+          "row_index": 17,
+          "patient_id": "64",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:18",
+          "row_index": 18,
+          "patient_id": "65",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:19",
+          "row_index": 19,
+          "patient_id": "68",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:20",
+          "row_index": 20,
+          "patient_id": "75",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:21",
+          "row_index": 21,
+          "patient_id": "77",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:22",
+          "row_index": 22,
+          "patient_id": "84",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:23",
+          "row_index": 23,
+          "patient_id": "85",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:24",
+          "row_index": 24,
+          "patient_id": "86",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:25",
+          "row_index": 25,
+          "patient_id": "90",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:26",
+          "row_index": 26,
+          "patient_id": "92",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:27",
+          "row_index": 27,
+          "patient_id": "102",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:28",
+          "row_index": 28,
+          "patient_id": "108",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:29",
+          "row_index": 29,
+          "patient_id": "111",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:30",
+          "row_index": 30,
+          "patient_id": "117",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:31",
+          "row_index": 31,
+          "patient_id": "122",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:32",
+          "row_index": 32,
+          "patient_id": "125",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:33",
+          "row_index": 33,
+          "patient_id": "129",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:34",
+          "row_index": 34,
+          "patient_id": "130",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:35",
+          "row_index": 35,
+          "patient_id": "136",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:36",
+          "row_index": 36,
+          "patient_id": "147",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:37",
+          "row_index": 37,
+          "patient_id": "149",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:38",
+          "row_index": 38,
+          "patient_id": "151",
+          "changed_field_count": 0,
+          "record_score": 0.0,
+          "modified": false
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:39",
+          "row_index": 39,
+          "patient_id": "156",
+          "changed_field_count": 0,
+          "record_score": 0.0,
+          "modified": false
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:40",
+          "row_index": 40,
+          "patient_id": "157",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:41",
+          "row_index": 41,
+          "patient_id": "163",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:42",
+          "row_index": 42,
+          "patient_id": "20",
+          "changed_field_count": 5,
+          "record_score": 0.833333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:43",
+          "row_index": 43,
+          "patient_id": "41",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:44",
+          "row_index": 44,
+          "patient_id": "43",
+          "changed_field_count": 1,
+          "record_score": 0.166667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:45",
+          "row_index": 45,
+          "patient_id": "56",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:46",
+          "row_index": 46,
+          "patient_id": "73",
+          "changed_field_count": 2,
+          "record_score": 0.333333,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:47",
+          "row_index": 47,
+          "patient_id": "78",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:48",
+          "row_index": 48,
+          "patient_id": "93",
+          "changed_field_count": 3,
+          "record_score": 0.5,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:49",
+          "row_index": 49,
+          "patient_id": "118",
+          "changed_field_count": 4,
+          "record_score": 0.666667,
+          "modified": true
+        },
+        {
+          "uid": "table4_english_back_to_chinese_summary:50",
+          "row_index": 50,
+          "patient_id": "158",
+          "changed_field_count": 0,
+          "record_score": 0.0,
+          "modified": false
+        }
+      ]
+    }
+  ]
+}

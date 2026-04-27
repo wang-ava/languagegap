@@ -28,11 +28,17 @@ Additional project files related to this workflow:
 | Reviewer file | Main repository source | Purpose |
 | --- | --- | --- |
 | `scripts/01_translate_records.py` | `doctorpeng/code/translation/translation.py` | Translate clinic dialogues into English and Thai. |
-| `scripts/04_summarize_doctorpeng.py` | `doctorpeng/code/answer-in-specific-language.py`, `doctorpeng/code/answer_back_in_english.py` | Summarize original, translated, and back-translated dialogues. The reviewer script keeps reference and prediction together in one row; the production scripts write separate summary files that replace `medical_record`. |
+| `scripts/04_summarize_doctorpeng.py` | `doctorpeng/code/answer-in-specific-language.py`, `doctorpeng/code/answer_back_in_english.py` | Summarize original, translated, and back-translated dialogues. The reviewer script can either keep the summary in `predicted_medical_record` for inspection or write it into `medical_record` to mimic the production layout. |
 | `scripts/02_back_translate_records.py` | `doctorpeng/code/translation_back/translation_back.py` | Back-translate translated dialogues into Chinese. |
-| `scripts/07_build_doctorpeng_scoring_table.py` | `doctorpeng/result/form/sync_form_csv_from_results.py`, `doctorpeng/result/doctor_scoring_tables_multidim_qwen_qwen3-vl-235b-a22b-thinking/评分指南_多维评分.md` | Build the 7-dimension doctor scoring CSV from original records and model summaries. |
-| `scripts/08_aggregate_doctorpeng_scores.py` | reviewer-side summary over `doctorpeng/result/doctor_scoring_tables_multidim_qwen_qwen3-vl-235b-a22b-thinking/*.csv` | Aggregate completed doctor score sheets into per-dimension means, mean total score, and recommendation counts. |
-| `scripts/06_compare_real_world.py` | downstream comparison against `medical_record` fields in `doctorpeng/data/dialogue_quality_sample_50.jsonl` and same-language summary outputs | Optional field-level comparison for same-language outputs such as Chinese summaries and back-translated Chinese summaries. |
+| `scripts/07_build_doctorpeng_review_file.py` | `doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/build_doctor_review_tables.py`, `doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/README_DOCTOR_REVIEW.md` | Build the doctor-review JSON schema that mirrors the exported edit files used in the full repository. |
+| `scripts/08_evaluate_doctorpeng_modification.py` | `doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/evaluate_results.py`, `doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/compute_modification_scores.py`, `doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/build_modification_score_simple.py` | Compute modification score and modification rate from doctor-edited summaries. |
+| `scripts/06_compare_real_world.py` | downstream comparison against `medical_record` fields in `doctorpeng/data/dialogue_quality_sample_50.jsonl` and same-language summary outputs | Auxiliary field-level comparison for same-language outputs such as Chinese summaries and back-translated Chinese summaries. |
+
+Related full-repository step:
+
+- `doctorpeng/code/translation_result_to_chinese/translation_result_to_chinese.py`
+
+This step normalizes English and Thai summaries into Chinese before the doctor-review workflow starts. The reviewer package does not duplicate that translation step, but it keeps the downstream review-file and modification-score logic aligned with it.
 
 ## Other Datasets Using the Same Pattern
 

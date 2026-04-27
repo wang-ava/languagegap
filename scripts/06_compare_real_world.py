@@ -14,7 +14,9 @@ FIELDS = [
     "chief_complaint",
     "history_of_present_illness",
     "past_history",
+    "personal_history",
     "allergy_history",
+    "genetic_history",
 ]
 CHINESE_RE = re.compile(r"[\u4e00-\u9fff]")
 
@@ -126,16 +128,17 @@ def validate_language_compatibility(rows: List[Dict[str, Any]]) -> None:
             raise ValueError(
                 "Predicted summary does not look Chinese while the reference medical_record does. "
                 f"Problem row: patient_id={row.get('patient_id')}. "
-                "In the reviewer package, English and Thai DoctorPeng outputs are primarily evaluated with doctor "
-                "scoring tables rather than raw cross-language string similarity. Use "
-                "scripts/07_build_doctorpeng_scoring_table.py for that workflow, or compare only "
-                "same-language outputs such as Chinese summaries and back-translated Chinese summaries."
+                "In the reviewer package, English and Thai DoctorPeng outputs are primarily evaluated through "
+                "doctor review plus modification score, not raw cross-language string similarity. Build a review "
+                "file with scripts/07_build_doctorpeng_review_file.py and evaluate the edited export with "
+                "scripts/08_evaluate_doctorpeng_modification.py, or compare only same-language outputs such as "
+                "Chinese summaries and back-translated Chinese summaries."
             )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Lightweight field-level comparison between DoctorPeng model summaries and real-world records."
+        description="Auxiliary same-language field-level comparison between DoctorPeng model summaries and reference records."
     )
     parser.add_argument(
         "--input",

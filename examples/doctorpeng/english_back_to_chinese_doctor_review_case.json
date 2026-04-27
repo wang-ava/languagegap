@@ -1,0 +1,224 @@
+{
+  "uid": "table4_english_back_to_chinese_summary:1",
+  "row_index": 1,
+  "patient_id": "1",
+  "patient_label": "患者1",
+  "source_id": "table4_english_back_to_chinese_summary",
+  "source_jsonl": "result/summary_back/qwen_qwen3-vl-235b-a22b-thinking/english_back_to_chinese_summary.jsonl",
+  "source_line_number": 1,
+  "source_sha256": "78b7fb6da38b232ad32666056984b75c7f90b75dd119815f24709f5fe1e53864",
+  "reviewed": true,
+  "edited_report_language": "zh",
+  "edited_report_text": "主诉：\n双眼青光眼术后2年诉双眼肿痛\n\n现病史：\n患者诉双眼青光眼术后2年，双眼肿痛，曾行手术2-3次，长期用药\n\n既往史：\n青光眼手术史，无高血压、糖尿病\n\n个人史：\n\n\n过敏史：\n未明确\n\n家族史：",
+  "edited_report": {
+    "chief_complaint": "双眼青光眼术后2年诉双眼肿痛",
+    "history_of_present_illness": "患者诉双眼青光眼术后2年，双眼肿痛，曾行手术2-3次，长期用药",
+    "past_history": "青光眼手术史，无高血压、糖尿病",
+    "personal_history": "",
+    "allergy_history": "未明确",
+    "genetic_history": ""
+  },
+  "original_current_report_text": "主诉：\n双眼肿痛\n\n现病史：\n双眼肿痛持续约2年，曾行青光眼手术两三次\n\n既往史：\n青光眼手术史（两三次，最近一次在去年），无高血压、糖尿病，有流鼻血史\n\n个人史：\n\n\n过敏史：\n未明确\n\n家族史：",
+  "original_current_report": {
+    "chief_complaint": "双眼肿痛",
+    "history_of_present_illness": "双眼肿痛持续约2年，曾行青光眼手术两三次",
+    "past_history": "青光眼手术史（两三次，最近一次在去年），无高血压、糖尿病，有流鼻血史",
+    "personal_history": "",
+    "allergy_history": "未明确",
+    "genetic_history": ""
+  },
+  "original_report_text_from_raw_lines": "主诉：双眼抗青光眼术后2年诉双眼疼痛\n现病史：患者诉双眼抗青光眼术后2年，诉双眼疼痛伴异物感、干涩。当时未引起重视，半月前感左眼眼眶不适，于XX医院门诊就诊，门诊诊断为“双眼慢性闭角型青光眼”，予以“马来酸噻吗洛尔滴眼液、布林佐胺滴眼液、酒石酸溴莫尼定滴眼液”降眼压、“益脉康”营养神经治疗，患者今感视物范围缩窄明显，影响生活，遂来XX医院门诊复诊\n既往史：否认高血压病、糖尿病\n过敏史：否认过敏史",
+  "original_dialogue_from_raw_lines": "说话人 1: 好，来。病历给我。\n说话人 1: 叫陈月，陈月啊。左眼明白。\n说话人 2: 3月2，2年了。做到，这几年在这里做了两次、三次手术，一老在这里买药了，眼睛肿痛死嘎。\n说话人 1: 今天的结果在哪里？这么多病历本。\n说话人 2: 今天还没来过。\n说话人 1: 那现在是怎么了？就是常规复查，是吧？没得什么其他的不舒服啦。疼。哪个眼睛疼啊？一双眼睛都有点痛，是吧？用了好久了。\n说话人 2: 有把做完手术没？好久就到医院去了。\n说话人 1: 这是好的，你的眼压降下来了，你是做的青光眼手术了？\n说话人 2: 青光手术。是做的青光。是做的青光。\n说话人 1: 没有高血压、糖尿病这些问题吧。没有。\n说话人 2: 没有啊。流鼻血了吧。\n说话人 1: 你就是那个最近一次手术是什么时候做的？你已经。\n说话人 2: 今年打的第一次，做了几次了？在这里？\n说话人 1: 最近的一次我问你。\n说话人 2: 最近就是去年。\n说话人 1: 做的什么手术？经闭联合术啊。我翻慢些。不？我问你快些。不？我翻翻半天就是问你不？你记得，你就说不。",
+  "current_dialogue": "说话人 1: 好的，来。给我病历。\n说话人 1: 叫陈悦，陈悦啊。左眼明白。\n说话人 2: 3月2日，2年。做了给，这几年在这里做了两、三次手术，一个老在这里买了药，眼睛肿痛得要死嘎。\n说话人 1: 今天的结果在哪里？这么多病历本。\n说话人 2: 今天还没来。\n说话人 1: 那么现在怎么了？只是常规复查，对吧？没有任何其他不适。疼。哪只眼睛疼？两只眼睛都有一点疼，对吧？用了很长时间。\n说话人 2: [ba] 做完手术了没有？很久以前就去医院了。\n说话人 1: 这很好，你的眼压降下来了，你做了青光眼手术？\n说话人 2: 青光眼手术。做的是青光眼。做的是青光眼。\n说话人 1: 没有高血压，糖尿病，这些问题，对吧。没有。\n说话人 2: 没有。流鼻血了，对吧。\n说话人 1: 你是只是那个最近的手术是什么时候做的？你已经。\n说话人 2: 今年有了第一次，做了多少次？这里？\n说话人 1: 最近的一次我问你。\n说话人 2: 最近是去年。\n说话人 1: 做了什么手术？经鼻联合手术啊。我翻慢一点。不？我问你快一点。不？我翻翻半天就是在问你不？你记得，你就说不。",
+  "raw_record": {
+    "record_type": "patient_dialogue",
+    "section": "high_quality",
+    "section_title": "第一部分：高质量对话（136人）",
+    "serial_index_in_section": 1,
+    "heading": "1. 患者1",
+    "patient_label": "患者1",
+    "patient_id": 1,
+    "source_file": "20260305.docx",
+    "dialogue_quality_raw": "高（对话轮次16轮）",
+    "dialogue_quality": "high",
+    "dialogue_rounds_reported": 16,
+    "has_image_info_marker": true,
+    "medical_record": {
+      "chief_complaint": "双眼肿痛",
+      "history_of_present_illness": "双眼肿痛持续约2年，曾行青光眼手术两三次",
+      "past_history": "青光眼手术史（两三次，最近一次在去年），无高血压、糖尿病，有流鼻血史",
+      "allergy_history": "未明确"
+    },
+    "audio_status": {
+      "has_primary_transcript_marker": true,
+      "no_matching_audio_record": false,
+      "has_supplementary_transcript": false
+    },
+    "supplementary_audio": {
+      "timestamp_duration_raw": null,
+      "keywords_raw": null
+    },
+    "conversation_turns": [
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "好的，来。给我病历。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "叫陈悦，陈悦啊。左眼明白。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 2",
+        "speaker_id": 2,
+        "timestamp": null,
+        "text": "3月2日，2年。做了给，这几年在这里做了两、三次手术，一个老在这里买了药，眼睛肿痛得要死嘎。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "今天的结果在哪里？这么多病历本。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 2",
+        "speaker_id": 2,
+        "timestamp": null,
+        "text": "今天还没来。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "那么现在怎么了？只是常规复查，对吧？没有任何其他不适。疼。哪只眼睛疼？两只眼睛都有一点疼，对吧？用了很长时间。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 2",
+        "speaker_id": 2,
+        "timestamp": null,
+        "text": "[ba] 做完手术了没有？很久以前就去医院了。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "这很好，你的眼压降下来了，你做了青光眼手术？"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 2",
+        "speaker_id": 2,
+        "timestamp": null,
+        "text": "青光眼手术。做的是青光眼。做的是青光眼。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "没有高血压，糖尿病，这些问题，对吧。没有。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 2",
+        "speaker_id": 2,
+        "timestamp": null,
+        "text": "没有。流鼻血了，对吧。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "你是只是那个最近的手术是什么时候做的？你已经。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 2",
+        "speaker_id": 2,
+        "timestamp": null,
+        "text": "今年有了第一次，做了多少次？这里？"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "最近的一次我问你。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 2",
+        "speaker_id": 2,
+        "timestamp": null,
+        "text": "最近是去年。"
+      },
+      {
+        "speaker_format": "cn",
+        "speaker_label": "说话人 1",
+        "speaker_id": 1,
+        "timestamp": null,
+        "text": "做了什么手术？经鼻联合手术啊。我翻慢一点。不？我问你快一点。不？我翻翻半天就是在问你不？你记得，你就说不。"
+      }
+    ],
+    "notes": [],
+    "raw_lines": [
+      "1. 患者1",
+      "来源文件：20260305.docx",
+      "对话质量：高（对话轮次16轮）",
+      "患者1",
+      "图片信息",
+      "主诉：双眼抗青光眼术后2年诉双眼疼痛",
+      "现病史：患者诉双眼抗青光眼术后2年，诉双眼疼痛伴异物感、干涩。当时未引起重视，半月前感左眼眼眶不适，于XX医院门诊就诊，门诊诊断为“双眼慢性闭角型青光眼”，予以“马来酸噻吗洛尔滴眼液、布林佐胺滴眼液、酒石酸溴莫尼定滴眼液”降眼压、“益脉康”营养神经治疗，患者今感视物范围缩窄明显，影响生活，遂来XX医院门诊复诊",
+      "既往史：否认高血压病、糖尿病",
+      "过敏史：否认过敏史",
+      "语音转文字内容（对话记录）",
+      "说话人 1",
+      "好，来。病历给我。",
+      "说话人 1",
+      "叫陈月，陈月啊。左眼明白。",
+      "说话人 2",
+      "3月2，2年了。做到，这几年在这里做了两次、三次手术，一老在这里买药了，眼睛肿痛死嘎。",
+      "说话人 1",
+      "今天的结果在哪里？这么多病历本。",
+      "说话人 2",
+      "今天还没来过。",
+      "说话人 1",
+      "那现在是怎么了？就是常规复查，是吧？没得什么其他的不舒服啦。疼。哪个眼睛疼啊？一双眼睛都有点痛，是吧？用了好久了。",
+      "说话人 2",
+      "有把做完手术没？好久就到医院去了。",
+      "说话人 1",
+      "这是好的，你的眼压降下来了，你是做的青光眼手术了？",
+      "说话人 2",
+      "青光手术。是做的青光。是做的青光。",
+      "说话人 1",
+      "没有高血压、糖尿病这些问题吧。没有。",
+      "说话人 2",
+      "没有啊。流鼻血了吧。",
+      "说话人 1",
+      "你就是那个最近一次手术是什么时候做的？你已经。",
+      "说话人 2",
+      "今年打的第一次，做了几次了？在这里？",
+      "说话人 1",
+      "最近的一次我问你。",
+      "说话人 2",
+      "最近就是去年。",
+      "说话人 1",
+      "做的什么手术？经闭联合术啊。我翻慢些。不？我问你快些。不？我翻翻半天就是问你不？你记得，你就说不。",
+      "患者1",
+      "────────────────────────────────────────────────────────────"
+    ],
+    "unparsed_lines": []
+  }
+}
