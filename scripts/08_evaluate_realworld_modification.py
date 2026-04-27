@@ -233,7 +233,7 @@ def field_label(field_name: str) -> str:
 
 def build_markdown_report(metrics: List[FileMetrics], overall: Dict[str, Any]) -> str:
     lines = [
-        "# DoctorPeng Modification Score Report",
+        "# Real-World Modification Score Report",
         "",
         "## Metric Definition",
         "- `modification_score = changed_field_count / total_editable_field_slots`",
@@ -263,7 +263,7 @@ def build_markdown_report(metrics: List[FileMetrics], overall: Dict[str, Any]) -
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Compute DoctorPeng modification score and modification rate from doctor-edited JSON files."
+        description="Compute real-world modification score and modification rate from doctor-edited JSON files."
     )
     parser.add_argument("--inputs", nargs="+", required=True, help="One or more doctor-review JSON files.")
     parser.add_argument("--output", required=True, help="Summary JSON output path.")
@@ -288,7 +288,7 @@ def main() -> None:
     write_json(
         Path(args.output),
         {
-            "score_definition": "DoctorPeng doctor-edit modification score over 6 editable fields.",
+            "score_definition": "Real-world doctor-edit modification score over 6 editable fields.",
             "editable_field_count": len(SUMMARY_FIELDS),
             "overall": overall,
             "tables": [serialize_metric(metric) for metric in metrics],

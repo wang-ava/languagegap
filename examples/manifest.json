@@ -6,7 +6,7 @@
     "fig_idx": 113,
     "patient_id": 3824
   },
-  "doctorpeng": {
+  "realworld": {
     "patient_id": 1,
     "english_review_uid": "table2_english_summary:1",
     "english_back_review_uid": "table4_english_back_to_chinese_summary:1"

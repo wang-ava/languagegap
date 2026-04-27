@@ -40,7 +40,7 @@ def prompt_for_language(language: str) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Summarize DoctorPeng dialogues into structured fields.")
+    parser = argparse.ArgumentParser(description="Summarize real-world clinical dialogues into structured fields.")
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--target-language", default="English")

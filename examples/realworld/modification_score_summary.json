@@ -1,5 +1,5 @@
 {
-  "score_definition": "DoctorPeng doctor-edit modification score over 6 editable fields.",
+  "score_definition": "Real-world doctor-edit modification score over 6 editable fields.",
   "editable_field_count": 6,
   "note": "Reviewer example summary includes only the exported table2 and table4 review files.",
   "overall": {

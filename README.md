@@ -13,7 +13,7 @@ Its goal is to show, in one place, how the project works end to end:
 
 The code here is intentionally simpler than the production repository. It keeps the same study logic and case identities, but removes most path-specific, resume-specific, and plotting-specific details so reviewers can read the workflow quickly.
 
-For reviewer readability, a few outputs are normalized into a single inspection-friendly format. The main example is `DoctorPeng`: some example files keep the original `medical_record` and add `predicted_medical_record`, while the full repository writes standalone summary files where `medical_record` itself is replaced by the model output. The lightweight field-comparison script in this folder supports both layouts when the reference and prediction are already in the same language.
+For reviewer readability, a few outputs are normalized into a single inspection-friendly format. The main real-world example keeps the original `medical_record` and adds `predicted_medical_record`, while the full repository writes standalone summary files where `medical_record` itself is replaced by the model output. The lightweight field-comparison script in this folder supports both layouts when the reference and prediction are already in the same language.
 
 ## Included Workflows
 
@@ -36,7 +36,7 @@ Vision-language workflow over time-series monitoring figures.
 - model inference: two-step extraction and re-intubation prediction
 - back-translation pivot: English figure regenerated from translated content, then answered again in English
 
-### 3. `DoctorPeng`
+### 3. `Real-World Clinical Dialogue`
 
 Real-world outpatient dialogue summarization.
 
@@ -47,7 +47,7 @@ Real-world outpatient dialogue summarization.
 - pivot inference: summarize the back-translated Chinese dialogue
 - primary evaluation: doctors revise the model summary and the project computes modification score / modification rate from the edited fields
 
-The formal doctor review in the full repository is run on the Chinese-normalized summary files under `doctorpeng/result/translated_non_chinese_to_chinese/...`. This reviewer package does not duplicate the normalization script, but it keeps the same downstream review-file schema and the same modification-score definition.
+The formal doctor review in the full repository is run on Chinese-normalized summary files. This reviewer package does not duplicate that normalization script, but it keeps the same downstream review-file schema and the same modification-score definition.
 
 ## Why This Folder Exists
 
@@ -56,7 +56,7 @@ The full repository contains multiple datasets, many result directories, logs, e
 This folder gives reviewers a compact package with:
 
 - minimal scripts for each major stage
-- a mapping back to the original repository files
+- a mapping back to the original repository workflow stages
 - a few real examples extracted from this repository
 
 ## Folder Layout
@@ -65,23 +65,23 @@ This folder gives reviewers a compact package with:
 .
 ├── README.md
 ├── MAPPING.md
-├── DOCTOR_REVIEW_GUIDE.md
+├── REALWORLD_REVIEW_GUIDE.md
 ├── requirements.txt
 ├── examples/
 │   ├── README.md
 │   ├── healthbench/
 │   ├── mimic_iii/
-│   └── doctorpeng/
+│   └── realworld/
 └── scripts/
     ├── common.py
     ├── 01_translate_records.py
     ├── 02_back_translate_records.py
     ├── 03_answer_healthbench.py
-    ├── 04_summarize_doctorpeng.py
+    ├── 04_summarize_realworld.py
     ├── 05_answer_mimic_extubation.py
     ├── 06_compare_real_world.py
-    ├── 07_build_doctorpeng_review_file.py
-    ├── 08_evaluate_doctorpeng_modification.py
+    ├── 07_build_realworld_review_file.py
+    ├── 08_evaluate_realworld_modification.py
     └── build_examples_from_repo.py
 ```
 
@@ -126,60 +126,60 @@ python scripts/03_answer_healthbench.py \
   --language-label ZH
 ```
 
-DoctorPeng summarization:
+Real-world dialogue summarization:
 
 ```bash
 python scripts/01_translate_records.py \
-  --input doctorpeng/data/dialogue_quality_sample_50.jsonl \
-  --output examples/tmp_doctorpeng_english_dialogue.jsonl \
+  --input path/to/realworld_dialogue_sample_50.jsonl \
+  --output examples/tmp_realworld_english_dialogue.jsonl \
   --field conversation_turns \
   --field-type turns \
   --target-language English \
   --output-field conversation_turns
 
-python scripts/04_summarize_doctorpeng.py \
-  --input examples/tmp_doctorpeng_english_dialogue.jsonl \
-  --output examples/tmp_doctorpeng_english_summary.jsonl \
+python scripts/04_summarize_realworld.py \
+  --input examples/tmp_realworld_english_dialogue.jsonl \
+  --output examples/tmp_realworld_english_summary.jsonl \
   --target-language English \
   --predicted-field medical_record
 ```
 
-DoctorPeng doctor-review file generation:
+Doctor-review file generation:
 
 ```bash
-python scripts/07_build_doctorpeng_review_file.py \
-  --input doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/summary/qwen_qwen3-vl-235b-a22b-thinking/english_summary.jsonl \
-  --output examples/tmp_doctorpeng_english_review.json \
+python scripts/07_build_realworld_review_file.py \
+  --input path/to/normalized_english_summary.jsonl \
+  --output examples/tmp_realworld_english_review.json \
   --source-id table2_english_summary
 ```
 
 After doctors finish editing and export a JSON file in the same schema:
 
 ```bash
-python scripts/08_evaluate_doctorpeng_modification.py \
-  --inputs "doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/result/edits_table2_english_summary_doctor_review (1).json" \
-  --output examples/tmp_doctorpeng_modification_summary.json \
-  --markdown-output examples/tmp_doctorpeng_modification_report.md
+python scripts/08_evaluate_realworld_modification.py \
+  --inputs path/to/exported_review_edits.json \
+  --output examples/tmp_realworld_modification_summary.json \
+  --markdown-output examples/tmp_realworld_modification_report.md
 ```
 
 Optional same-language field comparison against the reference record:
 
 ```bash
 python scripts/06_compare_real_world.py \
-  --reference-input doctorpeng/data/dialogue_quality_sample_50.jsonl \
-  --predicted-input doctorpeng/result/summary_back/qwen_qwen3-vl-235b-a22b-thinking/english_back_to_chinese_summary.jsonl \
-  --output examples/tmp_doctorpeng_back_zh_comparison.jsonl
+  --reference-input path/to/realworld_dialogue_sample_50.jsonl \
+  --predicted-input path/to/back_translated_chinese_summary.jsonl \
+  --output examples/tmp_realworld_back_zh_comparison.jsonl
 ```
 
 To make the reviewer scripts write closer to the production layout, use:
 
 - `01_translate_records.py --output-field <source_field>`
 - `02_back_translate_records.py --output-field <source_field>`
-- `04_summarize_doctorpeng.py --predicted-field medical_record`
+- `04_summarize_realworld.py --predicted-field medical_record`
 
-Doctor review details:
+Review details:
 
-- See [DOCTOR_REVIEW_GUIDE.md](./DOCTOR_REVIEW_GUIDE.md) for the editable fields, exported JSON schema, and modification-score formula.
+- See [REALWORLD_REVIEW_GUIDE.md](./REALWORLD_REVIEW_GUIDE.md) for the editable fields, exported JSON schema, and modification-score formula.
 
 Build reviewer examples directly from this repository:
 
@@ -190,8 +190,8 @@ python scripts/build_examples_from_repo.py --repo-root .
 ## Notes
 
 - This package is for transparency and inspection. Some reviewer examples are normalized so one case can be read end to end without jumping between files, but the stage ordering and source artifacts stay aligned with the full repository.
-- For `DoctorPeng`, the primary real-world evaluation is doctor edit burden: doctors revise the summary, and the project reports modification score and modification rate over 6 editable fields. It is not a 7-dimension rating-table workflow.
+- For the real-world dialogue workflow, the primary evaluation is doctor edit burden: doctors revise the summary, and the project reports modification score and modification rate over 6 editable fields.
 - The lightweight `06_compare_real_world.py` script is only an auxiliary same-language inspection aid. It is useful for quick field-level comparisons against the reference record, but it is not the formal doctor-review metric used in the paper workflow.
-- In the full repository, English and Thai summaries are first normalized into Chinese with `doctorpeng/code/translation_result_to_chinese/translation_result_to_chinese.py`, then reviewed by doctors under `doctorpeng/result/translated_non_chinese_to_chinese/...`.
+- In the full repository, non-Chinese summaries are normalized into Chinese before doctor review. This package only exposes the downstream review and modification-score steps.
 - The exported MIMIC-III example is a single coherent case: `fig_idx = 113`, `patient_id = 3824`. The response example paths are rewritten to valid repository-relative image paths so reviewers can reuse them directly.
-- `MIMIC-CXR-Xray` and `OphthalmologyEHRglaucoma` follow the same forward-translation / multilingual inference / back-translation pattern, but they are not duplicated here to keep the reviewer package compact. Their original locations are listed in [MAPPING.md](./MAPPING.md).
+- `MIMIC-CXR-Xray` and `OphthalmologyEHRglaucoma` follow the same forward-translation / multilingual inference / back-translation pattern, but they are not duplicated here to keep the reviewer package compact. Their original locations are summarized in [MAPPING.md](./MAPPING.md).

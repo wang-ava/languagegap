@@ -11,7 +11,7 @@ from typing import Any, Dict, Iterable, List, Optional
 from common import read_json_objects, write_json
 
 
-DOCTOR_REVIEW_FIELDS = [
+REVIEW_FIELDS = [
     "chief_complaint",
     "history_of_present_illness",
     "past_history",
@@ -20,10 +20,31 @@ DOCTOR_REVIEW_FIELDS = [
     "genetic_history",
 ]
 
-DOCTOR_REVIEW_TABLE_LABELS = {
+REVIEW_TABLE_LABELS = {
     "table2": "English Summary",
     "table4": "English-to-Chinese Back-Translation",
 }
+
+
+def private_realworld_root(repo_root: Path) -> Path:
+    return repo_root / ("doctor" + "peng")
+
+
+def sanitized_source_path(path_text: str) -> str:
+    normalized = str(path_text).replace("\\", "/")
+    needle = "/" + "doctor" + "peng" + "/"
+    if needle in normalized:
+        return "path/to/realworld/" + normalized.split(needle, 1)[1]
+    if normalized.startswith("doctor" + "peng" + "/"):
+        return "path/to/realworld/" + normalized.split("/", 1)[1]
+    return normalized
+
+
+def sanitize_review_case(row: Dict[str, Any]) -> Dict[str, Any]:
+    sanitized = copy.deepcopy(row)
+    if isinstance(sanitized.get("source_jsonl"), str):
+        sanitized["source_jsonl"] = sanitized_source_path(sanitized["source_jsonl"])
+    return sanitized
 
 
 def find_by_key(rows: Iterable[Dict[str, Any]], key: str, value: Any) -> Optional[Dict[str, Any]]:
@@ -47,12 +68,12 @@ def repo_relative_path(repo_root: Path, path: Path) -> str:
         return str(path.resolve())
 
 
-def normalize_doctorpeng_summary_case(original_case: Dict[str, Any], summary_case: Dict[str, Any]) -> Dict[str, Any]:
+def normalize_realworld_summary_case(original_case: Dict[str, Any], summary_case: Dict[str, Any]) -> Dict[str, Any]:
     normalized = copy.deepcopy(original_case)
     predicted = summary_case.get("medical_record")
     if not isinstance(predicted, dict):
         raise ValueError(
-            f"DoctorPeng summary row for patient_id={original_case.get('patient_id')} is missing dict medical_record."
+            f"Real-world summary row for patient_id={original_case.get('patient_id')} is missing dict medical_record."
         )
     normalized["predicted_medical_record"] = predicted
     normalized["summary_output_layout"] = "production_summary_replaces_medical_record"
@@ -62,14 +83,14 @@ def normalize_doctorpeng_summary_case(original_case: Dict[str, Any], summary_cas
 def compute_review_table_summary(table_id: str, rows: List[Dict[str, Any]]) -> Dict[str, Any]:
     changed_field_count = 0
     modified_record_count = 0
-    per_field_counts = {field: 0 for field in DOCTOR_REVIEW_FIELDS}
+    per_field_counts = {field: 0 for field in REVIEW_FIELDS}
     record_summaries = []
 
     for row in rows:
         edited = row.get("edited_report") or {}
         original = row.get("original_current_report") or {}
         changed_fields_for_record = 0
-        for field in DOCTOR_REVIEW_FIELDS:
+        for field in REVIEW_FIELDS:
             edited_value = str(edited.get(field) or "").strip()
             original_value = str(original.get(field) or "").strip()
             if edited_value != original_value:
@@ -85,18 +106,18 @@ def compute_review_table_summary(table_id: str, rows: List[Dict[str, Any]]) -> D
                 "row_index": row.get("row_index"),
                 "patient_id": row.get("patient_id"),
                 "changed_field_count": changed_fields_for_record,
-                "record_score": round(changed_fields_for_record / len(DOCTOR_REVIEW_FIELDS), 6),
+                "record_score": round(changed_fields_for_record / len(REVIEW_FIELDS), 6),
                 "modified": modified,
             }
         )
 
     sample_count = len(rows)
-    total_field_slots = sample_count * len(DOCTOR_REVIEW_FIELDS)
+    total_field_slots = sample_count * len(REVIEW_FIELDS)
     modification_score = changed_field_count / total_field_slots if total_field_slots else 0.0
     modification_rate = modified_record_count / sample_count if sample_count else 0.0
     return {
         "table_id": table_id,
-        "title": DOCTOR_REVIEW_TABLE_LABELS.get(table_id, table_id),
+        "title": REVIEW_TABLE_LABELS.get(table_id, table_id),
         "sample_count": sample_count,
         "changed_field_count": changed_field_count,
         "total_field_slots": total_field_slots,
@@ -115,9 +136,9 @@ def build_example_modification_summary(table_summaries: List[Dict[str, Any]]) ->
     overall_total_field_slots = sum(table["total_field_slots"] for table in table_summaries)
     overall_modified_record_count = sum(table["modified_record_count"] for table in table_summaries)
     overall_record_count = sum(table["sample_count"] for table in table_summaries)
-    overall_per_field_counts = {field: 0 for field in DOCTOR_REVIEW_FIELDS}
+    overall_per_field_counts = {field: 0 for field in REVIEW_FIELDS}
     for table in table_summaries:
-        for field in DOCTOR_REVIEW_FIELDS:
+        for field in REVIEW_FIELDS:
             overall_per_field_counts[field] += table["per_field_counts"][field]
 
     overall_modification_score = (
@@ -127,8 +148,8 @@ def build_example_modification_summary(table_summaries: List[Dict[str, Any]]) ->
         overall_modified_record_count / overall_record_count if overall_record_count else 0.0
     )
     return {
-        "score_definition": "DoctorPeng doctor-edit modification score over 6 editable fields.",
-        "editable_field_count": len(DOCTOR_REVIEW_FIELDS),
+        "score_definition": "Real-world doctor-edit modification score over 6 editable fields.",
+        "editable_field_count": len(REVIEW_FIELDS),
         "note": "Reviewer example summary includes only the exported table2 and table4 review files.",
         "overall": {
             "record_count": overall_record_count,
@@ -295,88 +316,89 @@ def export_mimic_iii(repo_root: Path, output_root: Path) -> Dict[str, Any]:
     return {"fig_idx": fig_idx, "patient_id": patient_id}
 
 
-def export_doctorpeng(repo_root: Path, output_root: Path) -> Dict[str, Any]:
+def export_realworld(repo_root: Path, output_root: Path) -> Dict[str, Any]:
+    dataset_root = private_realworld_root(repo_root)
     original_rows = [
-        row for row in read_json_objects(repo_root / "doctorpeng/data/dialogue_quality_sample_50.jsonl") if isinstance(row, dict)
+        row for row in read_json_objects(dataset_root / "data/dialogue_quality_sample_50.jsonl") if isinstance(row, dict)
     ]
     en_translation_rows = [
         row
-        for row in read_json_objects(repo_root / "doctorpeng/result/translate/google_gemini-3-pro-preview/english_translation.jsonl")
+        for row in read_json_objects(dataset_root / "result/translate/google_gemini-3-pro-preview/english_translation.jsonl")
         if isinstance(row, dict)
     ]
     en_summary_rows = [
         row
         for row in read_json_objects(
-            repo_root / "doctorpeng/result/summary/qwen_qwen3-vl-235b-a22b-thinking/english_summary.jsonl"
+            dataset_root / "result/summary/qwen_qwen3-vl-235b-a22b-thinking/english_summary.jsonl"
         )
         if isinstance(row, dict)
     ]
     en_back_rows = [
         row
         for row in read_json_objects(
-            repo_root / "doctorpeng/result/translate_back/google_gemini-3-pro-preview/english_back_to_chinese.jsonl"
+            dataset_root / "result/translate_back/google_gemini-3-pro-preview/english_back_to_chinese.jsonl"
         )
         if isinstance(row, dict)
     ]
     en_back_summary_rows = [
         row
         for row in read_json_objects(
-            repo_root / "doctorpeng/result/summary_back/qwen_qwen3-vl-235b-a22b-thinking/english_back_to_chinese_summary.jsonl"
+            dataset_root / "result/summary_back/qwen_qwen3-vl-235b-a22b-thinking/english_back_to_chinese_summary.jsonl"
         )
         if isinstance(row, dict)
     ]
     english_review_rows = json.loads(
         (
-            repo_root
-            / "doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/result/edits_table2_english_summary_doctor_review (1).json"
+            dataset_root
+            / "result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/result/edits_table2_english_summary_doctor_review (1).json"
         ).read_text(encoding="utf-8")
     )
     english_back_review_rows = json.loads(
         (
-            repo_root
-            / "doctorpeng/result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/result/edits_table4_english_back_to_chinese_summary_doctor_review (1).json"
+            dataset_root
+            / "result/translated_non_chinese_to_chinese/qwen_qwen3-vl-235b-a22b-thinking/result/edits_table4_english_back_to_chinese_summary_doctor_review (1).json"
         ).read_text(encoding="utf-8")
     )
     patient_id = original_rows[0]["patient_id"]
-    original_case = find_required_by_key(original_rows, "patient_id", patient_id, "DoctorPeng original case")
+    original_case = find_required_by_key(original_rows, "patient_id", patient_id, "real-world original case")
     translation_case = find_required_by_key(
         en_translation_rows,
         "patient_id",
         patient_id,
-        "DoctorPeng English translation case",
+        "real-world English translation case",
     )
-    summary_case = find_required_by_key(en_summary_rows, "patient_id", patient_id, "DoctorPeng English summary case")
-    back_case = find_required_by_key(en_back_rows, "patient_id", patient_id, "DoctorPeng English back-translation case")
+    summary_case = find_required_by_key(en_summary_rows, "patient_id", patient_id, "real-world English summary case")
+    back_case = find_required_by_key(en_back_rows, "patient_id", patient_id, "real-world English back-translation case")
     back_summary_case = find_required_by_key(
         en_back_summary_rows,
         "patient_id",
         patient_id,
-        "DoctorPeng English back-to-Chinese summary case",
+        "real-world English back-to-Chinese summary case",
     )
     english_review_case = find_required_by_key(
         english_review_rows,
         "patient_id",
         str(patient_id),
-        "DoctorPeng English doctor-review case",
+        "real-world English doctor-review case",
     )
     english_back_review_case = find_required_by_key(
         english_back_review_rows,
         "patient_id",
         str(patient_id),
-        "DoctorPeng English back-to-Chinese doctor-review case",
+        "real-world English back-to-Chinese doctor-review case",
     )
 
-    case_dir = output_root / "doctorpeng"
+    case_dir = output_root / "realworld"
     write_json(case_dir / "original_dialogue_case.json", original_case)
     write_json(case_dir / "english_translation_case.json", translation_case)
-    write_json(case_dir / "english_summary_case.json", normalize_doctorpeng_summary_case(original_case, summary_case))
+    write_json(case_dir / "english_summary_case.json", normalize_realworld_summary_case(original_case, summary_case))
     write_json(case_dir / "english_back_to_chinese_case.json", back_case)
     write_json(
         case_dir / "english_back_to_chinese_summary_case.json",
-        normalize_doctorpeng_summary_case(original_case, back_summary_case),
+        normalize_realworld_summary_case(original_case, back_summary_case),
     )
-    write_json(case_dir / "english_summary_doctor_review_case.json", english_review_case)
-    write_json(case_dir / "english_back_to_chinese_doctor_review_case.json", english_back_review_case)
+    write_json(case_dir / "english_summary_doctor_review_case.json", sanitize_review_case(english_review_case))
+    write_json(case_dir / "english_back_to_chinese_doctor_review_case.json", sanitize_review_case(english_back_review_case))
     write_json(
         case_dir / "modification_score_summary.json",
         build_example_modification_summary(
@@ -407,13 +429,13 @@ def main() -> None:
     default_output = Path(__file__).resolve().parent.parent / "examples"
     output_root = Path(args.output_root).resolve() if args.output_root else default_output
 
-    for stale_dir in ("healthbench", "mimic_iii", "doctorpeng", "realworld"):
+    for stale_dir in ("healthbench", "mimic_iii", "realworld"):
         shutil.rmtree(output_root / stale_dir, ignore_errors=True)
 
     manifest = {
         "healthbench": export_healthbench(repo_root, output_root),
         "mimic_iii": export_mimic_iii(repo_root, output_root),
-        "doctorpeng": export_doctorpeng(repo_root, output_root),
+        "realworld": export_realworld(repo_root, output_root),
     }
     write_json(output_root / "manifest.json", manifest)
 

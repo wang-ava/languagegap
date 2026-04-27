@@ -200,7 +200,7 @@ def build_review_rows(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Build a DoctorPeng doctor-review JSON file aligned to the real exported edit schema."
+        description="Build a real-world doctor-review JSON file aligned to the exported edit schema."
     )
     parser.add_argument("--input", required=True, help="Summary JSON/JSONL file to review.")
     parser.add_argument("--output", required=True, help="Output JSON path.")

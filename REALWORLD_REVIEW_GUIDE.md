@@ -1,6 +1,6 @@
-# DoctorPeng Real-World Evaluation Guide
+# Real-World Evaluation Guide
 
-This reviewer package follows the same real-world evaluation idea as the full `DoctorPeng` workflow:
+This reviewer package follows the same real-world evaluation idea as the full clinical-dialogue workflow:
 
 1. generate a structured model summary from the dialogue
 2. normalize non-Chinese summaries into Chinese in the full repository
@@ -20,7 +20,7 @@ A modification score of `50%` means that, on average, doctors changed `3 / 6` ed
 
 ## Editable Fields
 
-The editable schema matches the full repository doctor-review tables:
+The editable schema matches the full doctor-review tables:
 
 - `chief_complaint`
 - `history_of_present_illness`
@@ -80,10 +80,10 @@ It is not a direct string-similarity comparison against the gold medical record.
 
 ## Reviewer Scripts in This Folder
 
-- `scripts/07_build_doctorpeng_review_file.py`
+- `scripts/07_build_realworld_review_file.py`
 Creates a starter JSON file in the same schema as the full doctor-review exports.
 
-- `scripts/08_evaluate_doctorpeng_modification.py`
+- `scripts/08_evaluate_realworld_modification.py`
 Computes modification score and modification rate from one or more doctor-edited JSON files.
 
 - `scripts/06_compare_real_world.py`

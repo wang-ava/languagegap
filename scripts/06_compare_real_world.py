@@ -128,17 +128,17 @@ def validate_language_compatibility(rows: List[Dict[str, Any]]) -> None:
             raise ValueError(
                 "Predicted summary does not look Chinese while the reference medical_record does. "
                 f"Problem row: patient_id={row.get('patient_id')}. "
-                "In the reviewer package, English and Thai DoctorPeng outputs are primarily evaluated through "
+                "In the reviewer package, English and Thai real-world dialogue outputs are primarily evaluated through "
                 "doctor review plus modification score, not raw cross-language string similarity. Build a review "
-                "file with scripts/07_build_doctorpeng_review_file.py and evaluate the edited export with "
-                "scripts/08_evaluate_doctorpeng_modification.py, or compare only same-language outputs such as "
+                "file with scripts/07_build_realworld_review_file.py and evaluate the edited export with "
+                "scripts/08_evaluate_realworld_modification.py, or compare only same-language outputs such as "
                 "Chinese summaries and back-translated Chinese summaries."
             )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Auxiliary same-language field-level comparison between DoctorPeng model summaries and reference records."
+        description="Auxiliary same-language field-level comparison between real-world dialogue summaries and reference records."
     )
     parser.add_argument(
         "--input",
@@ -148,7 +148,7 @@ def main() -> None:
     parser.add_argument(
         "--reference-input",
         default=None,
-        help="Two-file mode: reference JSON/JSONL with medical_record, typically the original DoctorPeng dataset.",
+        help="Two-file mode: reference JSON/JSONL with medical_record, typically the original clinical-dialogue dataset.",
     )
     parser.add_argument(
         "--predicted-input",
