@@ -6,7 +6,10 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List
 
-from common import extract_text_response, get_client, read_json_objects, usage_dict, write_jsonl
+from common import extract_text_response, get_client, load_stage_config, read_json_objects, usage_dict, write_jsonl
+
+
+STAGE = load_stage_config("healthbench_answer")
 
 
 def build_messages(row: Dict[str, Any]) -> List[Dict[str, str]]:
@@ -35,12 +38,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Generate reviewer-friendly HealthBench answers.")
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
-    parser.add_argument("--model", default="openai/gpt-4o")
+    parser.add_argument("--model", default=STAGE["model"])
     parser.add_argument("--api-key", default=None)
     parser.add_argument("--base-url", default=None)
     parser.add_argument("--language-label", default="EN", help="Display label such as EN or ZH.")
-    parser.add_argument("--rounds", type=int, default=1)
-    parser.add_argument("--temperature", type=float, default=0.2)
+    parser.add_argument("--rounds", type=int, default=STAGE["rounds"])
+    parser.add_argument("--temperature", type=float, default=STAGE["temperature"])
+    parser.add_argument("--max-tokens", type=int, default=STAGE["max_tokens"])
     parser.add_argument("--limit", type=int, default=None)
     args = parser.parse_args()
 
@@ -64,6 +68,7 @@ def main() -> None:
                     model=args.model,
                     messages=messages,
                     temperature=args.temperature,
+                    max_tokens=args.max_tokens,
                 )
                 response_text = extract_text_response(response)
                 usage = usage_dict(response)

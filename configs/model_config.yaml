@@ -1,0 +1,151 @@
+# Model versions and generation parameters used in the study.
+#
+# This file is the single source of truth for the inference settings reported in the
+# manuscript (Methods / Appendix 1). The scripts in scripts/ read their default model,
+# temperature and max_tokens from the `stages` section below; any value can still be
+# overridden on the command line.
+#
+# All models were accessed through the OpenRouter API (OpenAI-compatible endpoint).
+# OpenRouter model aliases do not pin a dated snapshot, so the access period and the
+# provider-returned `system_fingerprint` values are recorded for each model. Access
+# periods are taken from API `created` timestamps where available, otherwise from
+# output file timestamps.
+# A `max_tokens` of null means no limit was passed to the API (provider default).
+
+api:
+  provider: OpenRouter
+  base_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+
+models:
+  gemini-3-pro-preview:
+    id: google/gemini-3-pro-preview
+    role: forward translation and back-translation (all datasets and the real-world study)
+    upstream_providers: [Google AI Studio, Google]
+    access_period: 2026-01-18 to 2026-03-25
+
+  gpt-4o:
+    id: openai/gpt-4o
+    role: >-
+      benchmark inference (OphthalmologyEHR-Glaucoma, MIMIC-CXR, MIMIC-III);
+      HealthBench token-level analysis only; all token-level log-probability analyses
+    upstream_providers: [OpenAI, Azure]
+    access_period: 2026-02-06 to 2026-02-18
+    # system_fingerprint values returned across OphthalmologyEHR-Glaucoma and MIMIC-III
+    # responses, ordered by frequency.
+    system_fingerprints:
+      - fp_64dfa806c7
+      - fp_ad98c18a04
+      - fp_ed36a96f3d
+      - fp_a3cb6d4ca8
+      - fp_a9a5a50c8d
+      - fp_5eba410882
+      - fp_f4835817c8
+      - fp_01cbaa0587
+      - fp_18e61aa3bc
+      - fp_f032d30a59
+      - fp_009ac31db9
+      - fp_9e0d253e63
+      - fp_a2afb0f9e7
+      - fp_7d739725b0
+      - fp_7e79d70c47
+      - fp_9bbb64a1a3
+      - fp_83ecd81f1f
+      - fp_07646f167f
+      - fp_e9b9b028d7
+      - fp_4a331a0222
+
+  gpt-5.2:
+    id: openai/gpt-5.2
+    role: HealthBench inference (primary endpoint) and HealthBench rubric grader
+    upstream_providers: [OpenAI]
+    access_period: 2026-02-06
+    note: >-
+      Reasoning model; per-token log-probabilities are not exposed. Temperature was
+      passed as listed below, but reasoning models may not honour it.
+
+  qwen3-vl-235b-a22b-thinking:
+    id: qwen/qwen3-vl-235b-a22b-thinking
+    role: >-
+      cross-model comparison on all four benchmarks; structured record extraction in
+      the real-world ophthalmology study
+    upstream_providers: [Alibaba, Novita]
+    access_period: 2026-03-06 to 2026-03-25
+    note: >-
+      Thinking model; per-token log-probabilities are not exposed. Temperature was
+      passed as listed below, but thinking models may not honour it.
+
+# Per-stage settings, read by scripts/common.py:load_stage_config().
+stages:
+  forward_translation:
+    model: google/gemini-3-pro-preview
+    temperature: 0.1
+    max_tokens: 10000
+    applies_to: [HealthBench, MIMIC-CXR, OphthalmologyEHR-Glaucoma, MIMIC-III, real-world dialogues]
+
+  back_translation:
+    model: google/gemini-3-pro-preview
+    temperature: 0.1
+    max_tokens: 10000
+    applies_to: [HealthBench, MIMIC-CXR, OphthalmologyEHR-Glaucoma, real-world dialogues]
+    exceptions:
+      MIMIC-III:
+        temperature: 0.0
+        max_tokens: 1000
+
+  healthbench_answer:
+    model: openai/gpt-5.2
+    temperature: 0.2
+    max_tokens: null
+    rounds: 3
+    also_run_with: [openai/gpt-4o, qwen/qwen3-vl-235b-a22b-thinking]
+
+  healthbench_grader:
+    model: openai/gpt-5.2
+    temperature: 0.5
+    max_tokens: 2048
+    system_prompt: You are a helpful assistant.
+
+  mimic_cxr_answer:
+    model: openai/gpt-4o
+    temperature: 0.2
+    max_tokens: null
+    rounds: 3
+    also_run_with: [qwen/qwen3-vl-235b-a22b-thinking]
+
+  glaucoma_answer:
+    model: openai/gpt-4o
+    temperature: 0.2
+    max_tokens: null
+    rounds: 3
+    logprobs: true
+    top_logprobs: 5
+    also_run_with: [qwen/qwen3-vl-235b-a22b-thinking]
+
+  mimic_iii_answer:
+    model: openai/gpt-4o
+    temperature: 0.2
+    max_tokens: null
+    rounds: 3
+    logprobs: true
+    top_logprobs: 5
+    also_run_with: [qwen/qwen3-vl-235b-a22b-thinking]
+
+  realworld_summary:
+    model: qwen/qwen3-vl-235b-a22b-thinking
+    temperature: 0.1
+    max_tokens: 2000
+
+  realworld_normalise_to_chinese:
+    # Translates English/Thai-pivot summaries into Chinese before physician review.
+    model: google/gemini-3-pro-preview
+    temperature: 0.0
+    max_tokens: 2000
+
+# Settings shared by all inference stages.
+inference:
+  rounds_per_case: 3
+  logprobs: >-
+    Requested (top 5 alternatives per token) for GPT-4o only; used for the
+    position-wise perplexity, logic-break, mutation-count and calibration analyses.
+  random_seed: not set (the API does not guarantee deterministic sampling)

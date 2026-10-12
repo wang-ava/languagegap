@@ -7,7 +7,23 @@ import re
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
+import yaml
 from openai import OpenAI
+
+
+CONFIG_PATH = Path(__file__).resolve().parent.parent / "configs" / "model_config.yaml"
+
+
+def load_stage_config(stage: str, config_path: Path = CONFIG_PATH) -> Dict[str, Any]:
+    """Return the study settings (model, temperature, max_tokens, ...) for one pipeline stage."""
+    with open(config_path, "r", encoding="utf-8") as handle:
+        config = yaml.safe_load(handle)
+    return config["stages"][stage]
+
+
+def default_base_url(config_path: Path = CONFIG_PATH) -> str:
+    with open(config_path, "r", encoding="utf-8") as handle:
+        return yaml.safe_load(handle)["api"]["base_url"]
 
 
 def sanitize_model_name(model: str) -> str:
@@ -79,7 +95,7 @@ def get_client(api_key: Optional[str] = None, base_url: Optional[str] = None) ->
     resolved_key = (api_key or os.getenv("OPENAI_API_KEY") or os.getenv("OPENROUTER_API_KEY") or "").strip()
     if not resolved_key:
         raise ValueError("Missing API key. Set OPENAI_API_KEY or OPENROUTER_API_KEY.")
-    resolved_base = (base_url or os.getenv("BASE_URL") or "https://api.openai.com/v1").strip()
+    resolved_base = (base_url or os.getenv("BASE_URL") or default_base_url()).strip()
     return OpenAI(api_key=resolved_key, base_url=resolved_base)
 
 

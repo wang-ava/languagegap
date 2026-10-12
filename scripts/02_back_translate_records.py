@@ -4,15 +4,34 @@ from __future__ import annotations
 import argparse
 import copy
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from common import extract_text_response, get_client, pick_identifier, read_json_objects, usage_dict, write_jsonl
+from common import (
+    extract_text_response,
+    get_client,
+    load_stage_config,
+    pick_identifier,
+    read_json_objects,
+    usage_dict,
+    write_jsonl,
+)
 
 
-def back_translate_text(client, model: str, text: str, source_language: str) -> Dict[str, Any]:
+STAGE = load_stage_config("back_translation")
+
+
+def back_translate_text(
+    client,
+    model: str,
+    text: str,
+    source_language: str,
+    temperature: float = STAGE["temperature"],
+    max_tokens: Optional[int] = STAGE["max_tokens"],
+) -> Dict[str, Any]:
     response = client.chat.completions.create(
         model=model,
-        temperature=0.0,
+        temperature=temperature,
+        max_tokens=max_tokens,
         messages=[
             {
                 "role": "system",
@@ -35,11 +54,13 @@ def back_translate_text(client, model: str, text: str, source_language: str) -> 
     }
 
 
-def back_translate_messages(client, model: str, messages: List[Dict[str, Any]], source_language: str) -> Dict[str, Any]:
+def back_translate_messages(
+    client, model: str, messages: List[Dict[str, Any]], source_language: str, **gen: Any
+) -> Dict[str, Any]:
     translated: List[Dict[str, Any]] = []
     total = {"input_tokens": 0, "output_tokens": 0, "total_tokens": 0}
     for message in messages:
-        result = back_translate_text(client, model, str(message.get("content", "")), source_language)
+        result = back_translate_text(client, model, str(message.get("content", "")), source_language, **gen)
         translated.append({"role": message.get("role", "user"), "content": result["text"]})
         for key, value in result["usage"].items():
             total[key] += value
@@ -52,12 +73,13 @@ def back_translate_turns(
     turns: List[Dict[str, Any]],
     source_language: str,
     text_key: str,
+    **gen: Any,
 ) -> Dict[str, Any]:
     translated: List[Dict[str, Any]] = []
     total = {"input_tokens": 0, "output_tokens": 0, "total_tokens": 0}
     for turn in turns:
         out = copy.deepcopy(turn)
-        result = back_translate_text(client, model, str(turn.get(text_key, "")), source_language)
+        result = back_translate_text(client, model, str(turn.get(text_key, "")), source_language, **gen)
         out[text_key] = result["text"]
         translated.append(out)
         for key, value in result["usage"].items():
@@ -78,7 +100,9 @@ def main() -> None:
         default="back_translation",
         help="Field name to store the back-translated content. Use the source field name to mimic production layouts.",
     )
-    parser.add_argument("--model", default="openai/gpt-4o-mini")
+    parser.add_argument("--model", default=STAGE["model"])
+    parser.add_argument("--temperature", type=float, default=STAGE["temperature"])
+    parser.add_argument("--max-tokens", type=int, default=STAGE["max_tokens"])
     parser.add_argument("--api-key", default=None)
     parser.add_argument("--base-url", default=None)
     parser.add_argument("--limit", type=int, default=None)
@@ -89,6 +113,7 @@ def main() -> None:
         rows = rows[: args.limit]
 
     client = get_client(api_key=args.api_key, base_url=args.base_url)
+    gen = {"temperature": args.temperature, "max_tokens": args.max_tokens}
     outputs: List[Dict[str, Any]] = []
 
     for row in rows:
@@ -97,15 +122,15 @@ def main() -> None:
         out = copy.deepcopy(row)
         source = row.get(args.field)
         if args.field_type == "text":
-            result = back_translate_text(client, args.model, str(source or ""), args.source_language)
+            result = back_translate_text(client, args.model, str(source or ""), args.source_language, **gen)
             out[args.output_field] = result["text"]
             usage = result["usage"]
         elif args.field_type == "messages":
-            result = back_translate_messages(client, args.model, list(source or []), args.source_language)
+            result = back_translate_messages(client, args.model, list(source or []), args.source_language, **gen)
             out[args.output_field] = result["messages"]
             usage = result["usage"]
         else:
-            result = back_translate_turns(client, args.model, list(source or []), args.source_language, args.text_key)
+            result = back_translate_turns(client, args.model, list(source or []), args.source_language, args.text_key, **gen)
             out[args.output_field] = result["turns"]
             usage = result["usage"]
 

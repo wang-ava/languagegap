@@ -6,7 +6,18 @@ import copy
 from pathlib import Path
 from typing import Any, Dict, List
 
-from common import extract_text_response, get_client, parse_json_object, read_json_objects, usage_dict, write_jsonl
+from common import (
+    extract_text_response,
+    get_client,
+    load_stage_config,
+    parse_json_object,
+    read_json_objects,
+    usage_dict,
+    write_jsonl,
+)
+
+
+STAGE = load_stage_config("realworld_summary")
 
 
 SUMMARY_FIELDS = [
@@ -49,7 +60,9 @@ def main() -> None:
         default="predicted_medical_record",
         help="Field name for the model summary. Use medical_record to mimic the production summary layout.",
     )
-    parser.add_argument("--model", default="openai/gpt-4o")
+    parser.add_argument("--model", default=STAGE["model"])
+    parser.add_argument("--temperature", type=float, default=STAGE["temperature"])
+    parser.add_argument("--max-tokens", type=int, default=STAGE["max_tokens"])
     parser.add_argument("--api-key", default=None)
     parser.add_argument("--base-url", default=None)
     parser.add_argument("--limit", type=int, default=None)
@@ -68,7 +81,8 @@ def main() -> None:
         dialogue = build_dialogue_text(list(turns))
         response = client.chat.completions.create(
             model=args.model,
-            temperature=0.0,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens,
             messages=[
                 {
                     "role": "system",

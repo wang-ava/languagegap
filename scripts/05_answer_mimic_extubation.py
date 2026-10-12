@@ -10,12 +10,15 @@ from common import (
     encode_image_as_data_url,
     extract_text_response,
     get_client,
+    load_stage_config,
     parse_json_object,
     read_json_objects,
     usage_dict,
     write_jsonl,
 )
 
+
+STAGE = load_stage_config("mimic_iii_answer")
 
 LANGUAGE_SPECS = {
     "en": {"name": "English", "yes": "Yes", "no": "No"},
@@ -64,7 +67,9 @@ def main() -> None:
     parser.add_argument("--image", default=None)
     parser.add_argument("--patient-id", default="case_0")
     parser.add_argument("--language", choices=sorted(LANGUAGE_SPECS), default="en")
-    parser.add_argument("--model", default="openai/gpt-4o")
+    parser.add_argument("--model", default=STAGE["model"])
+    parser.add_argument("--temperature", type=float, default=STAGE["temperature"])
+    parser.add_argument("--max-tokens", type=int, default=STAGE["max_tokens"])
     parser.add_argument("--api-key", default=None)
     parser.add_argument("--base-url", default=None)
     parser.add_argument("--limit", type=int, default=None)
@@ -83,7 +88,8 @@ def main() -> None:
 
         step1_response = client.chat.completions.create(
             model=args.model,
-            temperature=0.0,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens,
             messages=[
                 {"role": "system", "content": build_step1_prompt(spec["name"])},
                 {
@@ -100,7 +106,8 @@ def main() -> None:
 
         step2_response = client.chat.completions.create(
             model=args.model,
-            temperature=0.0,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens,
             messages=[
                 {"role": "system", "content": f"You are an ICU physician. Communicate in {spec['name']}."},
                 {

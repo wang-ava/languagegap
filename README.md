@@ -67,6 +67,8 @@ This folder gives reviewers a compact package with:
 ├── MAPPING.md
 ├── REALWORLD_REVIEW_GUIDE.md
 ├── requirements.txt
+├── configs/
+│   └── model_config.yaml
 ├── examples/
 │   ├── README.md
 │   ├── healthbench/
@@ -89,9 +91,28 @@ This folder gives reviewers a compact package with:
 
 ```bash
 pip install -r requirements.txt
-export OPENAI_API_KEY=...
-export BASE_URL=https://openrouter.ai/api/v1
+export OPENROUTER_API_KEY=...
 ```
+
+All scripts call the OpenRouter API (`https://openrouter.ai/api/v1`) by default. Set `BASE_URL` or pass `--base-url` to use another OpenAI-compatible endpoint.
+
+## Model Versions and Generation Parameters
+
+[configs/model_config.yaml](./configs/model_config.yaml) records the exact model identifiers, generation parameters, access periods and provider-returned `system_fingerprint` values used in the study. The scripts in `scripts/` read their default `--model`, `--temperature` and `--max-tokens` from this file, so running them without these flags reproduces the study settings.
+
+| Stage | Model (OpenRouter ID) | Temperature | Max tokens |
+|---|---|---|---|
+| Forward translation (all datasets) | `google/gemini-3-pro-preview` | 0.1 | 10000 |
+| Back-translation (all datasets except MIMIC-III) | `google/gemini-3-pro-preview` | 0.1 | 10000 |
+| Back-translation (MIMIC-III) | `google/gemini-3-pro-preview` | 0.0 | 1000 |
+| HealthBench inference | `openai/gpt-5.2` | 0.2 | not set |
+| HealthBench rubric grader | `openai/gpt-5.2` | 0.5 | 2048 |
+| MIMIC-CXR, OphthalmologyEHR-Glaucoma and MIMIC-III inference | `openai/gpt-4o` (log-probabilities on, top 5) | 0.2 | not set |
+| Cross-model comparison (all four benchmarks) | `qwen/qwen3-vl-235b-a22b-thinking` | 0.2 | not set |
+| Real-world dialogue record extraction | `qwen/qwen3-vl-235b-a22b-thinking` | 0.1 | 2000 |
+| Real-world summaries normalised to Chinese before review | `google/gemini-3-pro-preview` | 0.0 | 2000 |
+
+Every benchmark case was run for three rounds. No random seed was set. OpenRouter aliases do not pin a dated snapshot, so the access period and the returned `system_fingerprint` values are listed in the config. GPT-5.2 and Qwen3 VL 235B A22B Thinking are reasoning models: they do not expose per-token log-probabilities and may not honour the temperature setting.
 
 ## Example Usage
 
@@ -116,6 +137,8 @@ python scripts/02_back_translate_records.py \
   --field-type messages \
   --source-language Chinese
 ```
+
+For MIMIC-III back-translation, add `--temperature 0 --max-tokens 1000` to match the study settings.
 
 HealthBench answering:
 
