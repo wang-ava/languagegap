@@ -102,7 +102,7 @@ All scripts call the OpenRouter API (`https://openrouter.ai/api/v1`) by default.
 
 | Stage | Model (OpenRouter ID) | Temperature | Max tokens |
 |---|---|---|---|
-| Forward translation (all datasets) | `google/gemini-3-pro-preview` | 0.1 | 10000 |
+| Forward translation (all datasets) | `google/gemini-3-pro-preview` | 0.2 | 10000 |
 | Back-translation (all datasets except MIMIC-III) | `google/gemini-3-pro-preview` | 0.2 | 10000 |
 | Back-translation (MIMIC-III) | `google/gemini-3-pro-preview` | 0.2 | 1000 |
 | HealthBench inference | `openai/gpt-5.2` | 0.2 | not set |

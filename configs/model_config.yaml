@@ -17,7 +17,7 @@ models:
 stages:
   forward_translation:
     model: google/gemini-3-pro-preview
-    temperature: 0.1
+    temperature: 0.2
     max_tokens: 10000
 
   back_translation:
