@@ -1,5 +1,4 @@
 # Model versions and generation parameters used in the study.
-# Scripts in scripts/ read their defaults from `stages`; command-line flags override them.
 # Each benchmark case was run for 3 rounds. No random seed was set.
 # max_tokens: null means no limit was passed to the API.
 
@@ -23,7 +22,7 @@ stages:
   back_translation:
     model: google/gemini-3-pro-preview
     temperature: 0.2
-    max_tokens: 10000  # MIMIC-III: 1000
+    max_tokens: 10000  
 
   healthbench_answer:
     model: openai/gpt-5.2
@@ -42,6 +41,8 @@ stages:
     model: openai/gpt-4o
     temperature: 0.2
     max_tokens: null
+    rounds: 3
+    top_logprobs: 5
     also_run_with: [qwen/qwen3-vl-235b-a22b-thinking]
 
   # GPT-4o log-probabilities (top 5 per token) were used for the token-level analyses.
@@ -49,6 +50,7 @@ stages:
     model: openai/gpt-4o
     temperature: 0.2
     max_tokens: null
+    rounds: 3
     top_logprobs: 5
     also_run_with: [qwen/qwen3-vl-235b-a22b-thinking]
 
@@ -56,6 +58,7 @@ stages:
     model: openai/gpt-4o
     temperature: 0.2
     max_tokens: null
+    rounds: 3
     top_logprobs: 5
     also_run_with: [qwen/qwen3-vl-235b-a22b-thinking]
 
@@ -65,7 +68,7 @@ stages:
     max_tokens: 2000
 
   # Translates English/Thai-pivot summaries into Chinese before physician review.
-  realworld_normalise_to_chinese:
+  realworld_normalise_to_chinese:       
     model: google/gemini-3-pro-preview
     temperature: 0.2
     max_tokens: 2000
