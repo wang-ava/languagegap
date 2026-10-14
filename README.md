@@ -98,21 +98,21 @@ All scripts call the OpenRouter API (`https://openrouter.ai/api/v1`) by default.
 
 ## Model Versions and Generation Parameters
 
-[configs/model_config.yaml](./configs/model_config.yaml) records the exact model identifiers, generation parameters, access periods and provider-returned `system_fingerprint` values used in the study. The scripts in `scripts/` read their default `--model`, `--temperature` and `--max-tokens` from this file, so running them without these flags reproduces the study settings.
+[configs/model_config.yaml](./configs/model_config.yaml) records the model identifiers, generation parameters and access periods used in the study. The scripts in `scripts/` read their default `--model`, `--temperature` and `--max-tokens` from this file, so running them without these flags reproduces the study settings.
 
 | Stage | Model (OpenRouter ID) | Temperature | Max tokens |
 |---|---|---|---|
 | Forward translation (all datasets) | `google/gemini-3-pro-preview` | 0.1 | 10000 |
-| Back-translation (all datasets except MIMIC-III) | `google/gemini-3-pro-preview` | 0.1 | 10000 |
-| Back-translation (MIMIC-III) | `google/gemini-3-pro-preview` | 0.0 | 1000 |
+| Back-translation (all datasets except MIMIC-III) | `google/gemini-3-pro-preview` | 0.2 | 10000 |
+| Back-translation (MIMIC-III) | `google/gemini-3-pro-preview` | 0.2 | 1000 |
 | HealthBench inference | `openai/gpt-5.2` | 0.2 | not set |
-| HealthBench rubric grader | `openai/gpt-5.2` | 0.5 | 2048 |
+| HealthBench rubric grader | `openai/gpt-5.2` (also `openai/gpt-4o`) | 0.2 | 2048 |
 | MIMIC-CXR, OphthalmologyEHR-Glaucoma and MIMIC-III inference | `openai/gpt-4o` (log-probabilities on, top 5) | 0.2 | not set |
 | Cross-model comparison (all four benchmarks) | `qwen/qwen3-vl-235b-a22b-thinking` | 0.2 | not set |
-| Real-world dialogue record extraction | `qwen/qwen3-vl-235b-a22b-thinking` | 0.1 | 2000 |
-| Real-world summaries normalised to Chinese before review | `google/gemini-3-pro-preview` | 0.0 | 2000 |
+| Real-world dialogue record extraction | `qwen/qwen3-vl-235b-a22b-thinking` | 0.2 | 2000 |
+| Real-world summaries normalised to Chinese before review | `google/gemini-3-pro-preview` | 0.2 | 2000 |
 
-Every benchmark case was run for three rounds. No random seed was set. OpenRouter aliases do not pin a dated snapshot, so the access period and the returned `system_fingerprint` values are listed in the config. GPT-5.2 and Qwen3 VL 235B A22B Thinking are reasoning models: they do not expose per-token log-probabilities and may not honour the temperature setting.
+Every benchmark case was run for three rounds. No random seed was set. OpenRouter aliases do not pin a dated snapshot, so the access period of each model is listed in the config. GPT-5.2 and Qwen3 VL 235B A22B Thinking are reasoning models: they do not expose per-token log-probabilities and may not honour the temperature setting.
 
 ## Example Usage
 
@@ -138,7 +138,7 @@ python scripts/02_back_translate_records.py \
   --source-language Chinese
 ```
 
-For MIMIC-III back-translation, add `--temperature 0 --max-tokens 1000` to match the study settings.
+For MIMIC-III back-translation, add `--max-tokens 1000` to match the study settings.
 
 HealthBench answering:
 
